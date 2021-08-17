@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "jwtSecret": "mySecretText",
+    "mongoUri": "mongodb+srv://Vahag:sun777sun..@cluster0.lnp4r.mongodb.net/todos"
+}

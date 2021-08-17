@@ -1,0 +1,60 @@
+<h2 class="todosPage">Todos page</h2>
+
+{{#if todos.length}}
+<ul>
+  {{#each todos}}
+  <li class="todo" id="{{_id}}">
+    <form action="/complete" method="POST">
+      <label class="userInfo">
+
+        {{#if completed}}
+        <input type="checkbox" checked name="completed">
+        <span class="completed" id="userInfo">
+          Program Name: <span>{{title}}</span><br>
+          User Name: <span>{{user_name}}</span><br>
+          Age: <span>{{user_age}}</span><br>
+          Speciality: <span>{{speciality}}</span><br>
+        </span>
+
+        {{else}}
+        <input type="checkbox" name="completed">
+        <span id="userInfo">
+          Program Name: <span>{{title}}</span><br>
+          User Name: <span>{{user_name}}</span><br>
+          Age: <span>{{user_age}}</span><br>
+          Speciality: <span>{{speciality}}</span><br>
+        </span>
+        {{/if}}
+
+        <input type="hidden" value="{{_id}}" name="id">
+
+        <div class="flex buttons">
+          <button class="btn btn-small" type="submit">Save</button>
+          <button class="btn btn-small" onclick="foo('{{_id}}')" type="button">Delete</button>
+        </div>
+      </label>
+    </form>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>no todos!</p>
+{{/if}}
+<script>
+
+  function foo(id) {
+    $.ajax({
+      type: 'POST',
+      data: {
+        task_id: id
+      },
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      url: "/delete/" + id,
+      success: function (data) {
+        document.getElementById(id).remove()
+      }
+    });
+  }
+
+</script>
