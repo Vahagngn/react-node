@@ -1,0 +1,68 @@
+.contentContainer{
+    width: 70%;
+    margin: auto;
+}
+
+.createForm{
+    width: 70%;
+    margin: auto;
+}
+
+.todo {
+    margin-bottom: 1rem;
+}
+
+.todosPage{
+    font-family: sans-serif;
+    font-weight: bold;
+    color: dimgray;
+}
+.createTodo{
+    font-family: sans-serif;
+    font-weight: bold;
+    color: dimgray;
+}
+
+.todo span.completed {
+    text-decoration: line-through;
+}
+
+.todo label {
+    color: darkblue;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: #f3f3f3;
+    padding: 1rem;
+    padding-bottom: 5rem;
+}
+
+#userInfo span {
+    color: cornflowerblue;
+}
+
+.todo i {
+    z-index: 2;
+}
+
+.buttons{
+    position: relative;
+    top: 25px;
+}
+
+.brand-logo{
+    position: relative;
+    left: 5rem;
+}
+
+#nav-mobile{
+    position: relative;
+    right: 20rem;
+}
+
+.active {
+    font-weight: bold;
+    background-color: cornflowerblue;
+}
