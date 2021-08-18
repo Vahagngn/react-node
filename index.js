@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(todoRoutes)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
+app.use('/t', require('./routes/redirect.routes'))
 
 async function start() {
     try {
