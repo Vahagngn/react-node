@@ -35,13 +35,9 @@ export const AuthPage = () => {
 
     const loginHandler = async () => {
         try {
-            const data = await request('/api/auth/login', 'POST', {...form}).then(res => {
-                console.log(res);
+            const data = await request('/api/auth/login', 'POST', {...form})
                 setError('');
-                auth.login(res.token, res.userId)
-            })
-            setSuccess(data.message);
-            
+                auth.login(data.token, data.userId)
         }catch (e){
             setError(e.message);
         }

@@ -1,22 +1,18 @@
-import { BrowserRouter as Router, NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { useEffect } from 'react';
 import '../global.css';
 
 function Navbar() {
-    const router = new Router();
-    useEffect(() => {
-    },[])
 
     const auth = useContext(AuthContext)
     const history = useHistory()
 
-    const logoutHandler = event => {
-        event.preventDefault()
-        console.log(auth)
+    const logoutHandler = () => {
+        // event.preventDefault()
+        console.log(auth);
         auth.logout()
-        history.push('/routespage')
+        // history.push('/routespage')
     }
     return (
             <nav className="blue darken-4 navbar">

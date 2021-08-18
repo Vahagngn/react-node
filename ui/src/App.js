@@ -4,9 +4,17 @@ import Navbar from './components/navbar/navbar';
 import RoutesPage from './components/pages/RoutesPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
+import { AuthContext } from "./context/AuthContext";
+import { useAuth } from '../../ui/src/components/hooks/auth.hook';
 
 function App() {
+  const { token, login, logout, userId } = useAuth()
+  const isAuthenticated = !!token
+
   return (
+    <AuthContext.Provider value={{
+      token, login, logout, userId, isAuthenticated
+  }}>
       <Router>
         <div className="App">
           <header className="App-header">
@@ -17,6 +25,7 @@ function App() {
           </header>
         </div>
       </Router>
+      </AuthContext.Provider>
   );
 }
 
