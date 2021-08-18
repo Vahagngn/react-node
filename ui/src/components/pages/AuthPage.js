@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useHttp } from "../hooks/http.hooks"
 import { useMessage } from "../hooks/message.hook"
+import '../../components/global.css'
 
 export const AuthPage = () => {
     const auth = useContext(AuthContext)
@@ -38,6 +39,7 @@ export const AuthPage = () => {
             const data = await request('/api/auth/login', 'POST', {...form})
                 setError('');
                 auth.login(data.token, data.userId)
+                window.location.reload()
         }catch (e){
             setError(e.message);
         }
@@ -59,6 +61,7 @@ export const AuthPage = () => {
                        type="text"
                        name="email"
                        className="yellow-input"
+                       value={form.email}
                        onChange={changeHandler}
                        />
                        <label htmlFor="email"></label>
@@ -71,6 +74,7 @@ export const AuthPage = () => {
                        type="password"
                        name="password"
                        className="yellow-input"
+                       value={form.password}
                        onChange={changeHandler}
                        />
                        <label htmlFor="password"></label>

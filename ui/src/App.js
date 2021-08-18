@@ -1,15 +1,14 @@
-import Content from './components/content/content';
-import Create from './components/create/create';
 import Navbar from './components/navbar/navbar';
-import RoutesPage from './components/pages/RoutesPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from '../../ui/src/components/hooks/auth.hook';
+import { useRoutes } from './components/routes';
 
 function App() {
   const { token, login, logout, userId } = useAuth()
   const isAuthenticated = !!token
+  const routes = useRoutes(isAuthenticated)
 
   return (
     <AuthContext.Provider value={{
@@ -19,9 +18,9 @@ function App() {
         <div className="App">
           <header className="App-header">
             <Navbar />
-            <Route path="/" component={Content} exact />
-            <Route path="/create" component={Create} />
-            <Route path="/routespage" component={RoutesPage} />
+            <Route>
+              {routes}
+            </Route>
           </header>
         </div>
       </Router>
