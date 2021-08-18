@@ -25,7 +25,7 @@ function Navbar() {
                     <div className="nav-wrapper">
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><NavLink to="/" activeClassName="active" exact>Todos</NavLink></li>
-                            <li><NavLink to="/create" activeClassName="active">Create</NavLink></li>
+                            <li><NavLink to="/create" activeClassName="active">Create Todo</NavLink></li>
                             <li><NavLink to="/createpage" activeClassName="active" exact>Create user</NavLink></li>
                             <li><NavLink to="/links" activeClassName="active" exact>User List</NavLink></li>
                             <li><a href="/routespage" onClick={logoutHandler}>Logout</a></li>
