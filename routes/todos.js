@@ -28,12 +28,12 @@ router.post('/data', async (req, res) => {
     res.redirect('/data')
 })
 
-router.post('/delete/:id', async (req,res) => {
+router.delete('/delete/:id', async (req,res) => {
+    console.log(req.params);
     const todos = await Todo.find({}).lean().deleteOne({ _id: req.params.id })
     .exec(function(error, body) {
             res.json({ todos });
-        });
-        
+        });    
 })
 
 router.get('/create', (req, res) => {
