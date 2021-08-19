@@ -1,8 +1,13 @@
 import '../global.css'
+import api from "../../Api";
+import { useEffect, useState } from 'react';
 
 function Create() {
+
+    const [data, setData] = useState();
+
     return (
-        <form className="createForm">
+        <form className="createForm" action="/data" method="POST">
             <h2 className="createTodo">Create todo</h2>
 
             <div className="input-field">

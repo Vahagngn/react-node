@@ -6,7 +6,7 @@ export const LinksList = ({ links }) => {
     }
 
     return (
-        <table>
+        <table style={{position: 'relative', margin: 'auto', width: '70%'}}>
         <thead>
           <tr>
               <th>Number</th>

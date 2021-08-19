@@ -2,18 +2,30 @@ const { Router } = require('express')
 const router = Router()
 const Todo = require('../models/Todo')
 
-router.get('/', async (req, res) => {
+router.get('/data', async (req, res) => {
     const todos = await Todo.find({}).lean()
     // .exec(function(error, body) {
-    //     console.log(body);
+        res.send(todos);
     // });
-    todos.reverse()
+    // todos.reverse()
 
-    res.render('index', {
-        title: 'Todos list',
-        isIndex: true,
-        todos
+    // res.render('index', {
+    //     title: 'Todos list',
+    //     isIndex: true,
+    //     todos
+    // })
+})
+
+router.post('/data', async (req, res) => {
+    const todo = new Todo({
+        title: req.body.title,
+        user_name: req.body.user_name,
+        user_age: req.body.user_age,
+        speciality: req.body.speciality
     })
+
+    await todo.save()
+    res.redirect('/data')
 })
 
 router.post('/delete/:id', async (req,res) => {

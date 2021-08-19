@@ -4,9 +4,23 @@ const exphbs = require('express-handlebars')
 const todoRoutes = require('./routes/todos')
 const path = require('path')
 const config = require('config')
+const cors = require('cors')
 
 const PORT = config.get('port') || 5000
-const app = express()
+const app = express().use('*', cors());
+
+
+// app.use((req, res, next) => {
+//     //allow access from every, elminate CORS
+//     res.setHeader('Access-Control-Allow-Origin','*');
+//     res.removeHeader('x-powered-by');
+//     //set the allowed HTTP methods to be requested
+//     res.setHeader('Access-Control-Allow-Methods','POST');
+//     //headers clients can use in their requests
+//     res.setHeader('Access-Control-Allow-Headers','Content-Type');
+//     //allow request to continue and be handled by routes
+//     next();
+//   });
 app.use(express.json({ extended: true }))
 
 const hbs = exphbs.create({
