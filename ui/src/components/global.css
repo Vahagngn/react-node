@@ -66,3 +66,13 @@
     font-weight: bold;
     background-color: cornflowerblue;
 }
+
+#input-field input {
+    text-align: center;
+}
+
+.inputText{
+    font-weight: bold;
+    font-size: 21px;
+    text-shadow: 3px 5px 1px #ccc
+}

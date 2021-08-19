@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from 'react'
 import {useHttp} from '../hooks/http.hooks'
 import {AuthContext} from '../../context/AuthContext'
 import {useHistory} from 'react-router-dom'
+import '../global.css'
 
 export const CreatePage = () => {
     const history = useHistory()
@@ -20,6 +21,15 @@ export const CreatePage = () => {
         }
     }
 
+    const addClick = async () => {
+            try {
+                const data = await request('/api/link/generate', 'POST', {from: link}, {
+                    Authorization: `Bearer ${auth.token}`
+                })
+                history.push(`/detail/${data.link._id}`)
+            }catch (e) {}
+    }
+
     return (
         <div className="row">
             <div className="col s8 offset-s2" style={{paddingTop: '2rem'}}>
@@ -32,6 +42,8 @@ export const CreatePage = () => {
                       onChange={e => setLink(e.target.value)}
                       onKeyPress={pressHandler}
                     />
+                    <p className="inputText">Press Enter or click on the button</p>
+                    <button onClick={addClick} className="btn btn" type="submit">Add Link</button>
                     <label htmlFor="link"></label>
                 </div>
             </div>
