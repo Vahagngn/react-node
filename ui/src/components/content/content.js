@@ -31,7 +31,6 @@ function Content() {
         const response = await fetch(`/delete/${id}`, {
             method: "DELETE"
         });
-        console.log(response);
     }
 
     return (

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useHttp } from "../hooks/http.hooks"
 import { useMessage } from "../hooks/message.hook"
-import '../../components/global.css'
 
 export const AuthPage = () => {
     const auth = useContext(AuthContext)
@@ -48,7 +47,7 @@ export const AuthPage = () => {
     return (
         <div className="row">
            <div className="col s6 offset-s3">
-               <h1>Links</h1>
+               <h1 style={{color: 'white'}}>Links</h1>
                <div className="card blue darken-1" style={{padding: 10}}>
                    <div className="card-content white-text">
                        <span className="card-title">Authorization</span>
