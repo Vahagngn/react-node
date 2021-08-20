@@ -26,9 +26,8 @@ export const AuthPage = () => {
     const loginHandler = async () => {
         try {
             const data = await request('/api/auth/login', 'POST', {...form})
-                setError('');
-                auth.login(data.token, data.userId)
-                window.location.reload()
+            auth.login(data.token, data.userId, data.name, data.last_name)
+            window.location.reload() // DELETE THIS FUNCTION
         }catch (e){
             setError(e.message);
         }

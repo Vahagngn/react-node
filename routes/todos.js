@@ -5,8 +5,7 @@ const Todo = require('../models/Todo')
 router.get('/data', async (req, res) => {
     const todos = await Todo.find({}).lean()
     // .exec(function(error, body) {
-        res.send(todos);
-        todos.reverse()
+        res.send(todos.reverse());
     // });
 
     // res.render('index', {

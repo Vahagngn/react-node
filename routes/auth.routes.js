@@ -74,7 +74,6 @@ router.post(
          }
 
          const {email, password} = req.body
-
          const user = await User.findOne({ email })
 
          if(!user) {
@@ -93,9 +92,7 @@ router.post(
              {expiresIn: '1h'}
          )
 
-         res.json({ token, userId: user.id })
-
-
+         res.json({ token, userId: user.id, name: user.name, last_name: user.last_name})
 
     }catch (e){
         res.status(500).json({ message: 'Error'})

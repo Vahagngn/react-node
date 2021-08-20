@@ -1,6 +1,8 @@
 import './register.css'
 import api from "../../Api";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from "../../context/AuthContext"
+
 
 export const UsersList = () => {
 
@@ -9,7 +11,7 @@ export const UsersList = () => {
     function getDataUsers() {
         api.get('/api/auth/users/list').then(res => {
             setUsers(res);
-            console.log(res)
+            // console.log(res)
         })
     }
     useEffect(() => {
