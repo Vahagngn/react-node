@@ -24,8 +24,9 @@ function Navbar() {
                 <nav className="blue darken-4 navbar">
                     <div className="nav-wrapper">
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><NavLink to="/users/list" activeClassName="active">Users List</NavLink></li>
                             <li><NavLink to="/" activeClassName="active" exact>Todos</NavLink></li>
-                            <li><NavLink to="/create" activeClassName="active">Create User</NavLink></li>
+                            <li><NavLink to="/create" activeClassName="active">Create Todos</NavLink></li>
                             <li><NavLink to="/createpage" activeClassName="active" exact>Create Link</NavLink></li>
                             <li><NavLink to="/links" activeClassName="active" exact>Links</NavLink></li>
                             <li><a href="/routespage" onClick={logoutHandler}>Logout</a></li>
@@ -39,6 +40,7 @@ function Navbar() {
             <div className="nav-wrapper">
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li><NavLink to="/routespage" activeClassName="active">Login</NavLink></li>
+                    <li><NavLink to="/registration" activeClassName="active">Registration</NavLink></li>
                 </ul>
             </div>
         </nav>

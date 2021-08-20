@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
 import { useHttp } from "../hooks/http.hooks"
 import { useMessage } from "../hooks/message.hook"
@@ -20,17 +21,6 @@ export const AuthPage = () => {
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value })
-    }
-
-    const registerHandler = async () => {
-        try {
-            await request('/api/auth/register', 'POST', {...form}).then(res => {
-                setError('');
-                setSuccess(res.message);
-            })
-        }catch (e){
-            setError(e.message);
-        }
     }
 
     const loginHandler = async () => {
@@ -83,7 +73,7 @@ export const AuthPage = () => {
 
                    <div className="card-action">
                        <button onClick={loginHandler} disabled={loading} className="btn yellow darken-4" style={{marginRight: 10}}>Login</button>
-                       <button onClick={registerHandler} disabled={loading} className="btn grey lighten-1 black-text">Registration</button>
+                       <NavLink to="/registration"><button className="btn grey lighten-1 black-text">Registration</button></NavLink>
                        {!!err ? 
                        <span style={{color: 'red', fontWeight: 'bold'}}>
                            {err}

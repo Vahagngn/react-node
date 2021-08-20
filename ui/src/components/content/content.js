@@ -17,7 +17,7 @@ function Content() {
     // }, [token, request])
     function getData() {
         api.get('/data').then(res => {
-            setTodos(res);
+            setTodos(res)
         })
     }
 

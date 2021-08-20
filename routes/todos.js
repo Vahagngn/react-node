@@ -6,8 +6,8 @@ router.get('/data', async (req, res) => {
     const todos = await Todo.find({}).lean()
     // .exec(function(error, body) {
         res.send(todos);
+        todos.reverse()
     // });
-    // todos.reverse()
 
     // res.render('index', {
     //     title: 'Todos list',

@@ -6,11 +6,26 @@ const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
+
+router.get('/users/list', async (req, res) => {
+    const users = await User.find({}).lean()
+        res.send(users.reverse());
+})
+
+router.delete('/delete/user/:id', async (req,res) => {
+    const users = await User.find({}).lean().deleteOne({ _id: req.params.id })
+    return res.json({ users });
+})
+
 // /api/auth/register
 router.post(
     '/register',
     [
         check('email', 'Error email text').isEmail(),
+        check('name', 'Minimum name length 6 characters')
+           .isLength({ min: 3 }),
+        check('last_name', 'Minimum name length 6 characters')
+        .isLength({ min: 3 }),
         check('password', 'Minimum password length 6 characters')
            .isLength({ min: 6 })
     ],
@@ -24,14 +39,14 @@ router.post(
             })
         }
 
-        const {email, password} = req.body
+        const {email, password, name, last_name} = req.body
 
         const candidate = await User.findOne({ email })
         if(candidate) {
             return res.status(400).json({ message: 'User exists' })
         }
         const hashedPassword = await bcrypt.hash(password, 12)
-        const user = new User({ email, password: hashedPassword })
+        const user = new User({ email, name, last_name, password: hashedPassword })
 
         await user.save()
         res.status(201).json({ message: 'User Created' })
