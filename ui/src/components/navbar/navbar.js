@@ -1,14 +1,12 @@
 import { NavLink, useHistory } from "react-router-dom";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useAuth } from '../../components/hooks/auth.hook';
-import api from "../../Api";
 import '../global.css';
 
 
 
 function Navbar() {
-    const [users, setUsers] = useState(null);
     const auth = useContext(AuthContext)
     const history = useHistory()
 

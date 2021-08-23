@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useHttp } from "../hooks/http.hooks"
 import './register.css'
 
@@ -9,20 +9,33 @@ export const RegistrationPage = () => {
     const [err, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [form, setForm] = useState({
-        email: '',name: '',last_name: '',  password: ''
+        email: '',
+        name: '',
+        last_name: '',
+        password: ''
     })
     const{loading, request, error, clearError} = useHttp()
+
+    console.log(form.email);
+
+    
 
     const registerHandler = async () => {
         try {
             await request('/api/auth/register', 'POST', {...form}).then(res => {
-                setError('');
                 setSuccess(res.message);
             })
         }catch (e){
             setError(e.message);
         }
     }
+
+    useEffect(() => {
+        setForm({
+            email: '',
+            password: ''
+        })
+    },[])
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value })
@@ -44,8 +57,13 @@ export const RegistrationPage = () => {
                        type="text"
                        name="email"
                        className="yellow-input"
-                       value={form.email}
+                       value={form?.email}
                        onChange={changeHandler}
+                       autoComplete="off"
+                       readOnly
+                       onFocus={e => {
+                        e.target.removeAttribute('readonly')
+                       }}
                        style={{textAlign: 'center'}}
                        />
                        <label htmlFor="email"></label>
@@ -58,7 +76,8 @@ export const RegistrationPage = () => {
                        type="password"
                        name="password"
                        className="yellow-input"
-                       value={form.password}
+                       autoComplete="off"
+                       value={form?.password}
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
                        />
@@ -72,7 +91,8 @@ export const RegistrationPage = () => {
                        type="text"
                        name="name"
                        className="yellow-input"
-                       value={form.name}
+                       value={form?.name}
+                       autoComplete="off"
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
                        />
@@ -86,7 +106,8 @@ export const RegistrationPage = () => {
                        type="text"
                        name="last_name"
                        className="yellow-input"
-                       value={form.last_name}
+                       autoComplete="off"
+                       value={form?.last_name}
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
                        />

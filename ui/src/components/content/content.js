@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../global.css';
 import api from "../../Api";
 
@@ -47,6 +47,7 @@ function Content() {
                                             <label className="userInfo">
                                                 <input type="checkbox" name="completed" />
                                                 <span id="userInfo">
+                                                    Added by user: <span>{todo.added_user}</span><br />
                                                     Program Name: <span>{todo.title}</span><br />
                                                     User Name: <span>{todo.user_name}</span><br />
                                                     Age: <span>{todo.user_age}</span><br />
