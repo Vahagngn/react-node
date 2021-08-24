@@ -1,7 +1,7 @@
-import './register.css'
 import api from "../../Api";
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from "../../context/AuthContext"
+import UserList from "./UserList/UserList";
 
 
 export const UsersList = () => {
@@ -41,22 +41,13 @@ export const UsersList = () => {
         <tbody>
           {
           users.length ?  
-          users.map( user => {
+          users.map( (user, index) => {
               return (
-                <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.last_name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button 
-                   className="btn btn-small" 
-                   type="button"
-                   onClick={() => deleteUser(user._id)}
-                   >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+                <UserList 
+                   key={index}
+                   user={user}
+                   deleteUser={deleteUser}
+                />
               )
           }) : 
           <p>List is empty</p> 

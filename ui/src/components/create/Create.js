@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 
 function Create() {
 
-    const [data, setData] = useState();
-
     return (
         <form className="createForm" action="/data" method="POST">
             <h2 className="createTodo">Create todo</h2>

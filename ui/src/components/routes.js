@@ -3,10 +3,10 @@ import { LinksPage } from './pages/LinksPage'
 import { CreatePage } from './pages/CreatePage'
 import { DetailPage } from './pages/DetailPage'
 import { AuthPage } from './pages/AuthPage'
-import Content from './content/content'
-import Create from './create/create'
+import Content from './Todos/Todos'
+import Create from './create/Create'
 import { RegistrationPage } from './pages/RegistrationPage'
-import { UsersList } from './pages/UsersList'
+import { UsersList } from './UsersList/UsersList'
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
