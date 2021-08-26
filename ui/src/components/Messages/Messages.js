@@ -53,11 +53,8 @@ export const Messages = () => {
 
     useEffect(() => {
         socket.on('get-message', ({msg}) => {
-            // getMessages()
-            console.log(msg)
             const newMessages = messages
             newMessages.push(msg)
-            console.log(newMessages)
             setMessages([...newMessages])
         })
 
