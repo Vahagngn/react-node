@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserList = ( { user, deleteUser } ) => {
+const User = ( { user, deleteUser } ) => {
     return (
         <tr key={user._id}>
             <td>{user.name}</td>
@@ -19,4 +19,4 @@ const UserList = ( { user, deleteUser } ) => {
     )
 }
 
-export default UserList;
+export default User;

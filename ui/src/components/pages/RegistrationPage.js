@@ -9,14 +9,12 @@ export const RegistrationPage = () => {
     const [err, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [form, setForm] = useState({
-        email: '',
-        name: '',
-        last_name: '',
-        password: ''
+        email: null,
+        name: null,
+        last_name: null,
+        password: null
     })
     const{loading, request, error, clearError} = useHttp()
-
-    console.log(form.email);
 
     
 
@@ -57,7 +55,6 @@ export const RegistrationPage = () => {
                        type="text"
                        name="email"
                        className="yellow-input"
-                       value={form?.email}
                        onChange={changeHandler}
                        autoComplete="off"
                        readOnly
@@ -77,7 +74,6 @@ export const RegistrationPage = () => {
                        name="password"
                        className="yellow-input"
                        autoComplete="off"
-                       value={form?.password}
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
                        />
@@ -91,7 +87,6 @@ export const RegistrationPage = () => {
                        type="text"
                        name="name"
                        className="yellow-input"
-                       value={form?.name}
                        autoComplete="off"
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
@@ -107,7 +102,6 @@ export const RegistrationPage = () => {
                        name="last_name"
                        className="yellow-input"
                        autoComplete="off"
-                       value={form?.last_name}
                        onChange={changeHandler}
                        style={{textAlign: 'center'}}
                        />

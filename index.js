@@ -1,13 +1,33 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const exphbs = require('express-handlebars')
 const todoRoutes = require('./routes/todos')
 const path = require('path')
 const config = require('config')
 const cors = require('cors')
+const MessagesModel = require('./models/MessagesData')
 
 const PORT = config.get('port') || 5000
 const app = express().use('*', cors());
+const server = require('http').Server(app)
+// const io = require('socket.io')(server)
+
+const rooms = new Map()
+
+app.get('/messages', async (req, res) => {
+    const messages = await MessagesModel.find({}).lean()
+        res.send(messages.reverse());
+})
+
+// app.post('/messages', async (req, res) => {
+//     // res.send()
+//     const messages = new MessagesModel({
+//         message: req.body.message,
+//     })
+//     console.log(messages)
+
+//     await messages.save()
+// })
+
 
 
 // app.use((req, res, next) => {
@@ -23,15 +43,6 @@ const app = express().use('*', cors());
 //   });
 app.use(express.json({ extended: true }))
 
-const hbs = exphbs.create({
-    defaultLayout: 'main',
-    extname: 'hbs'
-})
-
-app.engine('hbs', hbs.engine)
-app.set('view engine', 'hbs')
-app.set('views', 'views')
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -40,7 +51,9 @@ app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
 app.use('/t', require('./routes/redirect.routes'))
 
+
 async function start() {
+    console.log('START')
     try {
         await mongoose.connect(config.get('mongoUri'), {
             useNewUrlParser: true,
@@ -48,7 +61,25 @@ async function start() {
             useFindAndModify: true,
             useCreateIndex: true
         })
-        app.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
+        const server = app.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
+        const io = require('socket.io')(server)
+
+
+        io.on('connection', socket => {
+            
+            // socket.emit('get-message', {})
+            socket.on('message', async messageInfo => {
+                socket.emit('get-message', {
+                    msg: messageInfo
+                })
+                const message = new MessagesModel({
+                    name: messageInfo.name,
+                    last_name: messageInfo.last_name,
+                    message: messageInfo.message
+                });
+                await message.save()
+            })
+        })
     } catch (e) {
         console.log('Server Error', e.message)
         process.exit(1)

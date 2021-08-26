@@ -28,6 +28,7 @@ function Navbar() {
                             <li><NavLink to="/create" activeClassName="active">Create Todos</NavLink></li>
                             <li><NavLink to="/createpage" activeClassName="active" exact>Create Link</NavLink></li>
                             <li><NavLink to="/links" activeClassName="active" exact>Links</NavLink></li>
+                            <li><NavLink to="/messages" activeClassName="active">Messages</NavLink></li>
                             <li><a href="/routespage" onClick={logoutHandler}>Logout</a></li>
                         </ul>
                     </div>

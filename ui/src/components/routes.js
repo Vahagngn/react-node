@@ -6,19 +6,21 @@ import { AuthPage } from './pages/AuthPage'
 import Content from './Todos/Todos'
 import Create from './create/Create'
 import { RegistrationPage } from './pages/RegistrationPage'
-import { UsersList } from './UsersList/UsersList'
+import { Users } from './Users/Users'
+import { Messages } from './Messages/Messages'
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
         return (
             <div>
                 <Switch>
-                    <Route path="/users/list" component={UsersList} exact/>
+                    <Route path="/users/list" component={Users} exact/>
                     <Route path="/" component={Content} exact />
                     <Route path="/create" component={Create} />
                     <Route path="/links" component={LinksPage} exact />
                     <Route path="/createpage" component={CreatePage} exact />
                     <Route path="/detail/:id" component={DetailPage} />
+                    <Route path="/messages" component={Messages} />
                     <Redirect to="/createpage" />
                 </Switch>
             </div>

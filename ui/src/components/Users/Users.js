@@ -1,17 +1,15 @@
 import api from "../../Api";
 import { useEffect, useState, useContext } from 'react';
-import { AuthContext } from "../../context/AuthContext"
-import UserList from "./UserList/UserList";
+import User from "./User/User";
 
 
-export const UsersList = () => {
+export const Users = () => {
 
     const [users, setUsers] = useState(null);
 
     function getDataUsers() {
         api.get('/api/auth/users/list').then(res => {
             setUsers(res);
-            // console.log(res)
         })
     }
     useEffect(() => {
@@ -43,7 +41,7 @@ export const UsersList = () => {
           users.length ?  
           users.map( (user, index) => {
               return (
-                <UserList 
+                <User
                    key={index}
                    user={user}
                    deleteUser={deleteUser}

@@ -7,11 +7,10 @@ const Todo = ({ todo, deleteUser }) => {
                 <label className="userInfo">
                     <input type="checkbox" name="completed" />
                     <span id="userInfo">
-                        Added by user: <span>{todo.added_user}</span><br />
-                                                    Program Name: <span>{todo.title}</span><br />
-                                                    User Name: <span>{todo.user_name}</span><br />
-                                                    Age: <span>{todo.user_age}</span><br />
-                                                    Speciality: <span>{todo.speciality}</span><br />
+                         Program Name: <span>{todo.title}</span><br />
+                         User Name: <span>{todo.user_name}</span><br />
+                         Age: <span>{todo.user_age}</span><br />
+                         Speciality: <span>{todo.speciality}</span><br />
                     </span>
                     <input type="hidden" name="id" />
                     <div className="flex buttons">
