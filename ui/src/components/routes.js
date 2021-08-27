@@ -1,5 +1,4 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { LinksPage } from './pages/LinksPage'
 import { CreatePage } from './pages/CreatePage'
 import { DetailPage } from './pages/DetailPage'
 import { AuthPage } from './pages/AuthPage'
@@ -8,6 +7,7 @@ import Create from './create/Create'
 import { RegistrationPage } from './pages/RegistrationPage'
 import { Users } from './Users/Users'
 import { Messages } from './Messages/Messages'
+import { LinksPage } from './LinksPage/LinksPage'
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {

@@ -17,18 +17,72 @@
 }
 
 .InputContainer {
-    width: 75%;
-    /* display: flex; */
+    width: 45%;
     height: 85vh;
-    border: 1px solid;
+    box-shadow: 25px 14px 42px -6px;
     align-items: flex-end;
     margin: 0px;
+    margin-left: 30px;
+    overflow: auto
+}
+.InputContainer::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+.InputContainer::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+.InputContainer::-webkit-scrollbar-thumb {
+    background: #26a69a; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+.InputContainer::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+  }
+
+.textMessage {
+    width: 90%;
+    position: relative;
+    top: 20px;
+    margin: auto;
+}
+
+.sendButtonContainer {
+    width: 90%;
+    position: relative;
+    margin: auto;
+    top: 30px;
+}
+
+.sendButtonContainer > button {
+    width: 100%;
+}
+
+.messagesContainer {
+    width: 90%;
+    position: relative;
+    margin: auto;
+    top: 20px;
 }
 
 .nameMessage {
     display: flex;
+    margin: 10px;
 }
 
 .userName {
     font-weight: bold;
+}
+
+.btn-users {
+    width: 25vw;
+    height: 50px;
+    cursor: pointer;
+    margin-top: 5px;
 }

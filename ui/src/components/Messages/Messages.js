@@ -51,8 +51,21 @@ export const Messages = () => {
         message.value = ''
     }
 
+    const pressHandler = async event => {
+        if (event.key === 'Enter') {
+            const message = document.getElementById('message')
+
+            socket.emit('message', {
+                message: message.value,
+                name: name,
+                last_name: last_name
+            })
+            message.value = ''
+        }
+    }
+
     useEffect(() => {
-        socket.on('get-message', ({msg}) => {
+        socket.on('get-message', ({ msg }) => {
             const newMessages = messages
             newMessages.unshift(msg)
             setMessages([...newMessages])
@@ -64,12 +77,12 @@ export const Messages = () => {
     }, [messages])
 
     useEffect(() => {
-       
+
 
         getDataUsers()
         getMessages()
 
-        
+
     }, [])
 
     // window.socket = socket
@@ -79,12 +92,13 @@ export const Messages = () => {
             {
                 users.length ?
                     <>
-                        <ListGroup style={{ width: "25%" }}>
+                        <ListGroup className="list-users">
                             <div>
                                 {users.map((user, index) => {
                                     return (
                                         <div key={index}>
                                             <ListGroupItem
+                                                className="btn btn-users"
                                                 tag="button"
                                                 action
                                                 onClick={(e) => onUserClickHandler(e)}
@@ -99,25 +113,35 @@ export const Messages = () => {
                         </ListGroup>
 
                         <div className="InputContainer">
-                            <input id="message" type="text" style={{
-                                border: "1px solid #26a69a",
-                                margin: 0
-                            }}
-                            />
-                            <button onClick={sendMessage} type="button" className="btn btn-default btn-sm">
-                                <span className="glyphicon glyphicon-envelope"></span> Send Message
+                            <div className="textMessage">
+                                <input 
+                                    id="message" 
+                                    type="text"
+                                    onKeyPress={pressHandler} 
+                                    style={{
+                                    border: "1px solid #26a69a",
+                                    margin: 0
+                                    }}
+                                />
+                            </div>
+                            <div className="sendButtonContainer">
+                                <button onClick={sendMessage} type="button" id="sendButton" className="btn btn-default btn-sm">
+                                    <span className="glyphicon glyphicon-envelope"></span> Send Message
                             </button>
-                            {
-                                messages.length ?
-                                    messages.map((messageText, index) => {
-                                        return (
-                                        <div className="nameMessage" key={index}>
-                                            <p className="userName">{messageText.name} {messageText.last_name} : &nbsp;</p>
-                                            <p>{messageText.message}</p>
-                                        </div>
-                                        )
-                                    }) : ''
-                            }
+                            </div>
+                            <div className="messagesContainer">
+                                {
+                                    messages.length ?
+                                        messages.map((messageText, index) => {
+                                            return (
+                                                <div className="nameMessage" key={index}>
+                                                    <p className="userName">{messageText.name} {messageText.last_name} : &nbsp;</p>
+                                                    <p style={{ color: 'gray' }}>{messageText.message}</p>
+                                                </div>
+                                            )
+                                        }) : ''
+                                }
+                            </div>
                         </div>
                     </>
                     : null

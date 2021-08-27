@@ -16,13 +16,13 @@ export const Users = () => {
         getDataUsers()
     }, [])
 
-    async function deleteUser(id) {
-      const filteredUsers = users.filter(user => user._id !== id)
-      setUsers(filteredUsers)
-      const response = await fetch(`/api/auth/delete/user/${id}`, {
-          method: "DELETE"
-      });
-  }
+  //   async function deleteUser(id) {
+  //     const filteredUsers = users.filter(user => user._id !== id)
+  //     setUsers(filteredUsers)
+  //     const response = await fetch(`/api/auth/delete/user/${id}`, {
+  //         method: "DELETE"
+  //     });
+  // }
 
 
     return (
@@ -44,7 +44,7 @@ export const Users = () => {
                 <User
                    key={index}
                    user={user}
-                   deleteUser={deleteUser}
+                  //  deleteUser={deleteUser}
                 />
               )
           }) : 

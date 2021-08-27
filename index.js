@@ -15,7 +15,7 @@ const rooms = new Map()
 
 app.get('/messages', async (req, res) => {
     const messages = await MessagesModel.find({}).lean()
-        res.send(messages);
+        res.send(messages.reverse());
 })
 
 // app.post('/messages', async (req, res) => {

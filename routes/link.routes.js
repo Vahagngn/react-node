@@ -42,6 +42,11 @@
     }
  })
 
+ router.delete('/delete/link/:id', async (req,res) => {
+    const links = await Link.find({}).lean().deleteOne({ _id: req.params.id })
+    return res.json({ links });
+})
+
  router.get('/:id', auth, async (req, res) => {
     try {
         const links = await Link.findById( req.params.id )
