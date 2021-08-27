@@ -15,7 +15,7 @@ const rooms = new Map()
 
 app.get('/messages', async (req, res) => {
     const messages = await MessagesModel.find({}).lean()
-        res.send(messages.reverse());
+        res.send(messages);
 })
 
 // app.post('/messages', async (req, res) => {
@@ -68,7 +68,7 @@ async function start() {
         io.on('connection', socket => {
             
             // socket.emit('get-message', {})
-            socket.on('message', async messageInfo => {
+            socket.on('message', messageInfo => {
                 socket.emit('get-message', {
                     msg: messageInfo
                 })
@@ -77,7 +77,7 @@ async function start() {
                     last_name: messageInfo.last_name,
                     message: messageInfo.message
                 });
-                await message.save()
+                message.save()
             })
         })
     } catch (e) {

@@ -54,7 +54,7 @@ export const Messages = () => {
     useEffect(() => {
         socket.on('get-message', ({msg}) => {
             const newMessages = messages
-            newMessages.push(msg)
+            newMessages.unshift(msg)
             setMessages([...newMessages])
         })
 
