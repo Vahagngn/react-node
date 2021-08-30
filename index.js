@@ -17,18 +17,18 @@ app.get('/messages', async (req, res) => {
         res.send(messages.reverse());
 })
 
-app.get('/private-message/:id', async (req, res) => {
-    const privateMessage = await MessagesModel.find({}).lean()
+// app.get('/private-message/:id', async (req, res) => {
+//     const privateMessage = await MessagesModel.find({}).lean()
     
-    const { id: userId } = req.params;
-    const obj = privateMessage.has(userId)
-      ? {
-          users: [...privateMessage.get(userId).get('users').values()],
-          messages: [...privateMessage.get(userId).get('messages').values()]
-      } : { users: [], messages: [] }
-    res.json(obj)
-    res.send(privateMessage.reverse());
-})
+//     const { id: userId } = req.params;
+//     const obj = privateMessage.has(userId)
+//       ? {
+//           users: [...privateMessage.get(userId).get('users').values()],
+//           messages: [...privateMessage.get(userId).get('messages').values()]
+//       } : { users: [], messages: [] }
+//     res.json(obj)
+//     res.send(privateMessage.reverse());
+// })
 
 // app.post('/private-message', (req, res) => {
 //     const privateMessage = await MessagesModel.find({}).lean()

@@ -5,14 +5,24 @@ const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const auth = require('../middleware/auth.middleware')
 
 
 router.get('/users/list', async (req, res) => {
-    const users = await User.find({}).lean()
+        const users = await User.find({}).lean()
+        res.send(users.reverse());
+   
     // const authUser = users.filter(user => user._id == users._id)
-    res.send(users.reverse());
     // console.log(authUser)
 })
+
+
+// try {
+//     const links = await Link.find({ owner: req.user.userId })
+//     res.json(links)
+// } catch (e) {
+//     res.status(500).json({ message: 'Error' })
+// }
 
 router.delete('/delete/user/:id', async (req,res) => {
     const users = await User.find({}).lean().deleteOne({ _id: req.params.id })

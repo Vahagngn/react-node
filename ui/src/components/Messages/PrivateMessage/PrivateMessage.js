@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import '../PrivateMessage/privateMessage.css'
 import socket from '../socket'
 
-export const PrivateMessage = ({ user, onCancel, messages }) => {
+export const PrivateMessage = ({ chatActive, user, onCancel, messages }) => {
 
     const sendMessagePrivate = (content) => {
         messages = document.getElementById('privateMessage')
-        console.log(messages.value)
+        console.log(chatActive)
+        // console.log(messages.value)
 
         // console.log(messages, "MSG")
         // if (user._id) {
@@ -28,8 +29,10 @@ export const PrivateMessage = ({ user, onCancel, messages }) => {
     return (
         <div className="privateMessageContainer">
             <div className="sendTextContainer">
-                <h5>{user.name.charAt(0) + '.' + user.last_name} </h5>
-                <button className="btn onCancel" onClick={onCancel}>Cancel</button>
+                <div className="headerContainer">
+                    <h5>{user.name.charAt(0) + '.' + user.last_name} </h5>
+                    <button className="btn onCancel" onClick={onCancel}>&#8617;</button>
+                </div>
                 <input style={{
                     border: "1px solid #26a69a",
                     marginTop: "10px"

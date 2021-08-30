@@ -66,12 +66,23 @@
 }
 
 .onCancel {
-    background: gray;
+    margin-top: 15px;
+    color: black;
+    background: white;
+    font-size: 40px;
+    border: none;
+    box-shadow: none;
 }
 
 .onCancel:hover {
     background: white;
-    font-weight: bold;
-    color: gray;
-    transition: 1s;
+    border: solid 1px #cccc;
+    border-radius: 15px 0px 15px 0px;
+    box-shadow: none;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 }

@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
 import api from '../../Api'
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useAuth } from '../../components/hooks/auth.hook';
 import './messages.css'
 import socket from './socket'
-import { Link } from 'react-router-dom';
 import { PrivateMessage } from './PrivateMessage/PrivateMessage';
-
+import { AuthContext } from "../../context/AuthContext"
 
 
 // const socket = io('http://localhost:5000', { transports : ['websocket','polling', 'flashsocket'] })
@@ -24,12 +22,16 @@ export const Messages = () => {
     const [messages, setMessages] = useState([])
     const [chatActive,setChatActive] = useState()
 
+    const auth = useContext(AuthContext)
+
     const { name, last_name } = useAuth()
 
     function getDataUsers() {
-        api.get('/api/auth/users/list').then(res => {
-            setUsers(res);
-        })
+        api.get('/api/auth/users/list')
+            .then(res => {
+                const participants = res.filter(u => u._id !== auth.userId)
+                setUsers(participants);
+            })
     }
 
     function getMessages() {
@@ -95,7 +97,7 @@ export const Messages = () => {
         getMessages()
     }, [])
 
-    // window.socket = socket
+    window.socket = socket
     return (
 
         <div style={{ display: "flex" }}>
