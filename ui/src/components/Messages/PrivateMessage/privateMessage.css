@@ -1,0 +1,77 @@
+.privateMessageContainer {
+    height: 85vh;
+    margin-left: 33px;
+    width: 25%;
+    box-shadow: 25px 14px 42px -6px;
+    align-items: flex-end;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.privateMessageContainer::-webkit-scrollbar {
+    width: 20px;
+}
+  
+  /* Track */
+.privateMessageContainer::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+  
+  /* Handle */
+.privateMessageContainer::-webkit-scrollbar-thumb {
+    background: #26a69a; 
+    border-radius: 10px;
+}
+  
+  /* Handle on hover */
+.privateMessageContainer::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+}
+
+.sendTextContainer {
+    position: relative;
+    margin: auto;
+    width: 85%;
+}
+
+.sendTextContainer > h5 {
+    font-weight: bold;
+}
+
+.sendBtn {
+    position: relative;
+    margin: auto;
+    width: 85%;
+}
+
+.sendBtn > button {
+    width: 100%;
+}
+
+.messageContainer {
+    display: flex;
+    position: relative;
+    margin: auto;
+    width: 85%;
+}
+
+.userName {
+    font-weight: bold;
+}
+
+.userText {
+    color: gray;
+}
+
+.onCancel {
+    background: gray;
+}
+
+.onCancel:hover {
+    background: white;
+    font-weight: bold;
+    color: gray;
+    transition: 1s;
+}

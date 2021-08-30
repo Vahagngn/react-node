@@ -8,24 +8,41 @@ const MessagesModel = require('./models/MessagesData')
 
 const PORT = config.get('port') || 5000
 const app = express().use('*', cors());
-const server = require('http').Server(app)
 // const io = require('socket.io')(server)
 
-const rooms = new Map()
+// const rooms = new Map()
 
 app.get('/messages', async (req, res) => {
     const messages = await MessagesModel.find({}).lean()
         res.send(messages.reverse());
 })
 
-// app.post('/messages', async (req, res) => {
-//     // res.send()
-//     const messages = new MessagesModel({
-//         message: req.body.message,
-//     })
-//     console.log(messages)
+app.get('/private-message/:id', async (req, res) => {
+    const privateMessage = await MessagesModel.find({}).lean()
+    
+    const { id: userId } = req.params;
+    const obj = privateMessage.has(userId)
+      ? {
+          users: [...privateMessage.get(userId).get('users').values()],
+          messages: [...privateMessage.get(userId).get('messages').values()]
+      } : { users: [], messages: [] }
+    res.json(obj)
+    res.send(privateMessage.reverse());
+})
 
-//     await messages.save()
+// app.post('/private-message', (req, res) => {
+//     const privateMessage = await MessagesModel.find({}).lean()
+
+//     const { userId, userName } = req.body
+//     if(!privateMessage.has(userId)){
+//         privateMessage.set(
+//             userId,
+//             new MessagesModel([
+//                 ['users', new MessagesModel()],
+//                 ['messages', []]
+//             ])
+//         )
+//     }
 // })
 
 
@@ -66,7 +83,6 @@ async function start() {
 
 
         io.on('connection', socket => {
-            
             // socket.emit('get-message', {})
             socket.on('message', messageInfo => {
                 socket.emit('get-message', {
@@ -75,11 +91,26 @@ async function start() {
                 const message = new MessagesModel({
                     name: messageInfo.name,
                     last_name: messageInfo.last_name,
-                    message: messageInfo.message
+                    message: messageInfo.message,
+                    global: messageInfo.global,
+                    private: messageInfo.private
                 });
                 message.save()
             })
+
+            // socket.on("private message", ({content, to, message, name, last_name}) => {
+            //     socket.to(to).emit("private message", {
+            //         content,
+            //         from: socket.id,
+            //         name,
+            //         last_name,
+            //         message
+            //     })
+            // })
         })
+
+
+
     } catch (e) {
         console.log('Server Error', e.message)
         process.exit(1)

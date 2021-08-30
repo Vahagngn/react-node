@@ -19,8 +19,6 @@ export const useHttp = () => {
                 throw new Error(data.message || 'Data error')
             }
 
-            // asdasd
-
             setLoading(false)
 
             return data

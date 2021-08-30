@@ -23,6 +23,7 @@
     align-items: flex-end;
     margin: 0px;
     margin-left: 30px;
+    border-radius: 10px;
     overflow: auto
 }
 .InputContainer::-webkit-scrollbar {

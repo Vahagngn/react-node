@@ -7,17 +7,8 @@ import Todo from './Todo/Todo'
 
 function Content() {
 
-    // const {token} = useContext(AuthContext)
-    // const {form, setForm} = useState()
-    // const {loading, error, request} = useHttp()
     const [todos, setTodos] = useState(null);
 
-    // const getTodos = useCallback( async () => {
-    // try {
-    // const data = await request('/', 'GET', {...form})
-    // console.log(data, "data")
-    // }catch (e) {}
-    // }, [token, request])
     function getData() {
         api.get('/data').then(res => {
             setTodos(res)

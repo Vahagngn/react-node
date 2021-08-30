@@ -9,7 +9,9 @@ const config = require('config')
 
 router.get('/users/list', async (req, res) => {
     const users = await User.find({}).lean()
-        res.send(users.reverse());
+    // const authUser = users.filter(user => user._id == users._id)
+    res.send(users.reverse());
+    // console.log(authUser)
 })
 
 router.delete('/delete/user/:id', async (req,res) => {
@@ -95,7 +97,7 @@ router.post(
          res.json({ token, userId: user.id, name: user.name, last_name: user.last_name})
 
     }catch (e){
-        res.status(500).json({ message: 'Error'})
+        res.json({ message: 'Error'})
     }
 })
 

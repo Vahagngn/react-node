@@ -5,6 +5,8 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useAuth } from '../../components/hooks/auth.hook';
 import './messages.css'
 import socket from './socket'
+import { Link } from 'react-router-dom';
+import { PrivateMessage } from './PrivateMessage/PrivateMessage';
 
 
 
@@ -20,6 +22,7 @@ import socket from './socket'
 export const Messages = () => {
     const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([])
+    const [chatActive,setChatActive] = useState()
 
     const { name, last_name } = useAuth()
 
@@ -36,8 +39,15 @@ export const Messages = () => {
     }
 
     const onUserClickHandler = (e) => {
-        console.log(e.target.querySelector('p').innerHTML)
+        // if(users.find(u => u._id == e.target.querySelector('p').innerHTML)) {
+            // setChatActive(true)
+        // }
+        const user_id = e.target.querySelector('p').innerHTML;
+        setChatActive({user: users.filter(user => user._id == user_id)[0]});
+    }
 
+    const onCancel = () => {
+        setChatActive(null)
     }
 
     const sendMessage = () => {
@@ -46,7 +56,9 @@ export const Messages = () => {
         socket.emit('message', {
             message: message.value,
             name: name,
-            last_name: last_name
+            last_name: last_name,
+            global: true,
+            private: false
         })
         message.value = ''
     }
@@ -58,7 +70,9 @@ export const Messages = () => {
             socket.emit('message', {
                 message: message.value,
                 name: name,
-                last_name: last_name
+                last_name: last_name,
+                global: true,
+                private: false
             })
             message.value = ''
         }
@@ -77,12 +91,8 @@ export const Messages = () => {
     }, [messages])
 
     useEffect(() => {
-
-
         getDataUsers()
         getMessages()
-
-
     }, [])
 
     // window.socket = socket
@@ -114,13 +124,13 @@ export const Messages = () => {
 
                         <div className="InputContainer">
                             <div className="textMessage">
-                                <input 
-                                    id="message" 
+                                <input
+                                    id="message"
                                     type="text"
-                                    onKeyPress={pressHandler} 
+                                    onKeyPress={pressHandler}
                                     style={{
-                                    border: "1px solid #26a69a",
-                                    margin: 0
+                                        border: "1px solid #26a69a",
+                                        margin: 0
                                     }}
                                 />
                             </div>
@@ -143,6 +153,15 @@ export const Messages = () => {
                                 }
                             </div>
                         </div>
+                            {
+                                chatActive ? 
+                                <PrivateMessage
+                                            user={chatActive.user}
+                                            messages={messages}
+                                            onCancel={onCancel}
+                                        /> 
+                                : null
+                            }
                     </>
                     : null
             }
