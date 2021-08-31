@@ -4,7 +4,7 @@ const todoRoutes = require('./routes/todos')
 const path = require('path')
 const config = require('config')
 const cors = require('cors')
-const MessagesModel = require('./models/MessagesData')
+const MessagesModel = require('./models/Message')
 
 const PORT = config.get('port') || 5000
 const app = express().use('*', cors());
@@ -14,8 +14,13 @@ const app = express().use('*', cors());
 
 app.get('/messages', async (req, res) => {
     const messages = await MessagesModel.find({}).lean()
-        res.send(messages.reverse());
+    res.send(messages.reverse());
 })
+
+// app.get('/private-message', async (req, res) => {
+//     const privateMessages = await PrivateMessagesModel.find({}).lean()
+//     res.send(privateMessages.reverse())
+// })
 
 // app.get('/private-message/:id', async (req, res) => {
 //     const privateMessage = await MessagesModel.find({}).lean()
@@ -92,9 +97,9 @@ async function start() {
                     name: messageInfo.name,
                     last_name: messageInfo.last_name,
                     message: messageInfo.message,
-                    global: messageInfo.global,
-                    private: messageInfo.private
+                    chat_id: messageInfo.chat_id
                 });
+                console.log(message)
                 message.save()
             })
 

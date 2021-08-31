@@ -1,26 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../PrivateMessage/privateMessage.css'
 import socket from '../socket'
+import api from '../../../Api'
 
-export const PrivateMessage = ({ chatActive, user, onCancel, messages }) => {
+export const PrivateMessage = ({ user, onCancel, messages }) => {
 
-    const sendMessagePrivate = (content) => {
-        messages = document.getElementById('privateMessage')
-        console.log(chatActive)
-        // console.log(messages.value)
+    const [messagePrivate, setPrivate] = useState([])
 
-        // console.log(messages, "MSG")
-        // if (user._id) {
-        //     socket.emit("private message", {
-        //         content,
-        //         message: messages.value,
-        //         name: user.name,
-        //         last_name: user.last_name,
-        //         to: user._id
-        //     });
-        // }
-        // messages.value = ''
-    }
+    // const sendMessagePrivate = (content) => {
+    //     const privateMessage = document.getElementById('privateMessage')
+
+    //     socket.emit('message', {
+    //         message: privateMessage.value,
+    //         name: user.name,
+    //         last_name: user.last_name,
+    //         global: false,
+    //         private: true
+    //     })
+    //     console.log(privateMessage.value)
+    //     privateMessage.value = ''
+    // }
+
+    // const getPrivate = () => {
+    //     api.get('/api/private/message').then(res => {
+    //         setPrivate(res)
+    //         console.log(res)
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     getPrivate()
+    // }, [])
 
     // useEffect(() => {
     //     sendMessagePrivate()
@@ -43,20 +53,20 @@ export const PrivateMessage = ({ chatActive, user, onCancel, messages }) => {
                 />
             </div>
             <div className="sendBtn">
-                <button type="button" className="btn btn-default btn-sm" onClick={sendMessagePrivate}>
+                <button type="button" className="btn btn-default btn-sm">
                     <span className="glyphicon glyphicon-envelope"></span> Send
                 </button>
             </div>
-            {/* { */}
-                {/* // messages.length ? */}
-                {/* // messages.map((messageText, index) => { */}
+            {/* {
+                messages.length ?
+                messages.map((messagePrivate, index) => { */}
                         <div className="messageContainer">
-                            <p className="userName">Name : &nbsp;</p>
+                            <p className="userName">User Name : </p>
                             <p className="userText">Message text</p>
                         </div>
-                    {/* // }) */}
-                    {/* // : '' */}
-            {/* // } */}
+                    {/* }) */}
+                {/* : '' */}
+            {/* } */}
         </div>
     )
 }

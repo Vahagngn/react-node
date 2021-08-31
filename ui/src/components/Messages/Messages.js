@@ -21,6 +21,7 @@ export const Messages = () => {
     const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([])
     const [chatActive,setChatActive] = useState()
+    const [chat_id, setChatId] = useState()
 
     const auth = useContext(AuthContext)
 
@@ -37,6 +38,7 @@ export const Messages = () => {
     function getMessages() {
         api.get('/messages').then(res => {
             setMessages(res)
+            console.log(res)
         })
     }
 
@@ -59,8 +61,7 @@ export const Messages = () => {
             message: message.value,
             name: name,
             last_name: last_name,
-            global: true,
-            private: false
+            chat_id: auth.userId
         })
         message.value = ''
     }
@@ -73,8 +74,7 @@ export const Messages = () => {
                 message: message.value,
                 name: name,
                 last_name: last_name,
-                global: true,
-                private: false
+                chat_id: auth.userId
             })
             message.value = ''
         }
