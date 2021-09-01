@@ -9,20 +9,20 @@ function Create() {
             <h2 className="createTodo">Create todo</h2>
 
             <div className="input-field">
-                <input type="text" name="title" />
-                <label>Program Name</label>
+                <input type="text" name="title" placeholder = "Program Name"/>
+                <label></label>
             </div>
             <div className="input-field">
-                <input type="text" name="user_name" />
-                <label>User Name</label>
+                <input type="text" name="user_name" placeholder = "User Name"/>
+                <label></label>
             </div>
             <div className="input-field">
-                <input type="text" name="user_age" />
-                <label>Age</label>
+                <input type="text" name="user_age" placeholder = "Age"/>
+                <label></label>
             </div>
             <div className="input-field">
-                <input type="text" name="speciality" />
-                <label>Speciality</label>
+                <input type="text" name="speciality" placeholder = "Speciality"/>
+                <label></label>
             </div>
 
             <button type="submit" className="btn">Create</button>

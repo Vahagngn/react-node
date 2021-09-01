@@ -57,11 +57,11 @@
     position: relative;
     left: 5rem;
 }
-
+/* 
 #nav-mobile{
     position: relative;
     right: 20rem;
-}
+} */
 
 .active {
     font-weight: bold;

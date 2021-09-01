@@ -1,4 +1,17 @@
 table {
     width: 80%;
     margin: auto;
+    box-sizing: border-box;;
+}
+.nav-wrapper{
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+.nav-mobile{
+    width:100%
+}
+.userName span{
+    font-size: 10px;
+    color: lightgreen;
+    margin-top: 5px;
 }
