@@ -17,10 +17,10 @@ app.get('/messages', async (req, res) => {
     res.send(messages.reverse());
 })
 
-// app.get('/private-message', async (req, res) => {
-//     const privateMessages = await PrivateMessagesModel.find({}).lean()
-//     res.send(privateMessages.reverse())
-// })
+app.get('/private-message/:id', async (req, res) => {
+    const privateMessages = await MessagesModel.find({}).lean()
+    res.send(privateMessages.reverse())
+})
 
 // app.get('/private-message/:id', async (req, res) => {
 //     const privateMessage = await MessagesModel.find({}).lean()
@@ -103,15 +103,14 @@ async function start() {
                 message.save()
             })
 
-            // socket.on("private message", ({content, to, message, name, last_name}) => {
-            //     socket.to(to).emit("private message", {
-            //         content,
-            //         from: socket.id,
-            //         name,
-            //         last_name,
-            //         message
-            //     })
-            // })
+            socket.on("private message", ({content, to, message, name, last_name}) => {
+                socket.to(to).emit("private message", {
+                    name: messageInfo.name,
+                    last_name: messageInfo.last_name,
+                    message: messageInfo.message,
+                    chat_id: messageInfo.chat_id
+                })
+            })
         })
 
 

@@ -63,6 +63,7 @@ export const Messages = () => {
             last_name: last_name,
             chat_id: auth.userId
         })
+        console.log(chat_id)
         message.value = ''
     }
 
