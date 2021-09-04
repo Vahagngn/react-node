@@ -5,6 +5,8 @@ const path = require('path')
 const config = require('config')
 const cors = require('cors')
 const MessagesModel = require('./models/Message')
+const PrivateMessageModel = require('./models/PrivateMessage')
+const session = require('express-session')
 
 const PORT = config.get('port') || 5000
 const app = express().use('*', cors());
@@ -12,19 +14,161 @@ const app = express().use('*', cors());
 
 // const rooms = new Map()
 
+
+//GLOBAL MESSAGE >>>
+
 app.get('/messages', async (req, res) => {
     const messages = await MessagesModel.find({}).lean()
     res.send(messages.reverse());
 })
 
+
+//PRIVATE MESSAGE >>>
 app.get('/private-message/:id', async (req, res) => {
-    const privateMessages = await MessagesModel.find({}).lean()
+    const privateMessages = await PrivateMessageModel.find({}).lean()
     res.send(privateMessages.reverse())
 })
 
+
+app.get('/get-or-create-chat', async (req, res) => {
+    
+    const { firstUserId: firstUserId, secondUserId: secondUserId } = req.query
+    const privateChats = await PrivateMessageModel.findOne({ firstUserId, secondUserId }).populate('Chats').lean()
+
+
+    const updateChat = `${firstUserId}--with--${secondUserId}`
+    const allId = `${updateChat}--with--${privateChats._id}`
+    console.log(allId, "<---All ID--->")
+    
+
+    if( privateChats === null ) {
+        const newChat = await new PrivateMessageModel({
+            firstUserId,
+            secondUserId
+        })
+        newChat.save()
+        console.log(newChat, '<--- New Chat --->')
+    }
+    
+    console.log(privateChats, "<--- Private Chat --->")
+    // console.log(updateChat, "<--- Update Chat --->")
+    
+    // console.log(firstUserId, "<---One Id--->")
+    // console.log(req.query)
+    if(privateChats) {
+        return res.json({ chat: privateChats })
+    }
+    // res.json({ newChat })
+})
+
+app.use(express.json({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(todoRoutes)
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/link', require('./routes/link.routes'))
+app.use('/t', require('./routes/redirect.routes'))
+// app.use(session({
+//     secret: 'cookie_secret',
+//     name: 'cookie_name',
+//     store: 'sessionStore', // connect-mongo session store
+//     proxy: true,
+//     resave: true,
+//     saveUninitialized: true
+// }));
+
+
+async function start() {
+    try {
+        await mongoose.connect(config.get('mongoUri'), {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: true,
+            useCreateIndex: true
+        })
+        const server = app.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
+        const io = require('socket.io')(server)
+
+        app.post('/private-message', (req, res) => {
+            console.log(req.body)
+        })
+
+        io.on('connection', socket => {
+
+            // Global message socket start
+            socket.on('message', messageInfo => {
+                socket.emit('get-message', {
+                    msg: messageInfo
+                })
+                const message = new MessagesModel({
+                    name: messageInfo.name,
+                    last_name: messageInfo.last_name,
+                    message: messageInfo.message
+                });
+                message.save()
+            })
+            // Global message socket END
+
+            // Private message socket start
+
+            socket.on("private-message", (privateMessageInfo) => {
+                const { firstUserId, secondUserId, message, user_id, chat_id } = privateMessageInfo
+
+
+                socket.emit('get-private', {
+                    privateMsg: privateMessageInfo, user_id: user_id
+                })
+
+                // socket.to(id).emit('onMessage', message)
+
+                try {
+
+                    const private = new PrivateMessageModel({
+                        message: message,
+                        firstUserId: firstUserId,
+                        secondUserId: secondUserId,
+                        chat_id: chat_id,
+                        user_id: user_id
+                    })
+
+
+
+                    // const existing = await PrivateMessageModel.findOne({ chat_id, secondUserId, firstUserId, message })
+                    // 
+                    // if (existing) {
+                    // return res.json({ chat: existing })
+                    // }
+
+
+                    // socket.join(chat_id)
+
+
+                    private.save()
+
+                } catch (err) { console.log(err) }
+
+            })
+
+            // Private message socket END
+        })
+
+
+
+    } catch (e) {
+        console.log('Server Error', e.message)
+        process.exit(1)
+    }
+}
+
+start()
+
+
+
+
+
 // app.get('/private-message/:id', async (req, res) => {
 //     const privateMessage = await MessagesModel.find({}).lean()
-    
+
 //     const { id: userId } = req.params;
 //     const obj = privateMessage.has(userId)
 //       ? {
@@ -63,62 +207,3 @@ app.get('/private-message/:id', async (req, res) => {
 //     //allow request to continue and be handled by routes
 //     next();
 //   });
-app.use(express.json({ extended: true }))
-
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, 'public')))
-
-app.use(todoRoutes)
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/link', require('./routes/link.routes'))
-app.use('/t', require('./routes/redirect.routes'))
-
-
-async function start() {
-    console.log('START')
-    try {
-        await mongoose.connect(config.get('mongoUri'), {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: true,
-            useCreateIndex: true
-        })
-        const server = app.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
-        const io = require('socket.io')(server)
-
-
-        io.on('connection', socket => {
-            // socket.emit('get-message', {})
-            socket.on('message', messageInfo => {
-                socket.emit('get-message', {
-                    msg: messageInfo
-                })
-                const message = new MessagesModel({
-                    name: messageInfo.name,
-                    last_name: messageInfo.last_name,
-                    message: messageInfo.message,
-                    chat_id: messageInfo.chat_id
-                });
-                console.log(message)
-                message.save()
-            })
-
-            socket.on("private message", ({content, to, message, name, last_name}) => {
-                socket.to(to).emit("private message", {
-                    name: messageInfo.name,
-                    last_name: messageInfo.last_name,
-                    message: messageInfo.message,
-                    chat_id: messageInfo.chat_id
-                })
-            })
-        })
-
-
-
-    } catch (e) {
-        console.log('Server Error', e.message)
-        process.exit(1)
-    }
-}
-
-start()

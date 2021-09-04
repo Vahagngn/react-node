@@ -21,7 +21,6 @@ export const Messages = () => {
     const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([])
     const [chatActive,setChatActive] = useState()
-    const [chat_id, setChatId] = useState()
 
     const auth = useContext(AuthContext)
 
@@ -38,17 +37,22 @@ export const Messages = () => {
     function getMessages() {
         api.get('/messages').then(res => {
             setMessages(res)
-            console.log(res)
         })
     }
 
     const onUserClickHandler = (e) => {
+        setChatActive({user: null})
         // if(users.find(u => u._id == e.target.querySelector('p').innerHTML)) {
             // setChatActive(true)
         // }
         const user_id = e.target.querySelector('p').innerHTML;
         setChatActive({user: users.filter(user => user._id == user_id)[0]});
     }
+
+    useEffect(() => {
+        if(!chatActive) return
+        api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${chatActive.user._id}`)
+    }, [chatActive])
 
     const onCancel = () => {
         setChatActive(null)
@@ -60,10 +64,8 @@ export const Messages = () => {
         socket.emit('message', {
             message: message.value,
             name: name,
-            last_name: last_name,
-            chat_id: auth.userId
+            last_name: last_name
         })
-        console.log(chat_id)
         message.value = ''
     }
 
@@ -74,8 +76,7 @@ export const Messages = () => {
             socket.emit('message', {
                 message: message.value,
                 name: name,
-                last_name: last_name,
-                chat_id: auth.userId
+                last_name: last_name
             })
             message.value = ''
         }
@@ -160,7 +161,6 @@ export const Messages = () => {
                                 chatActive ? 
                                 <PrivateMessage
                                             user={chatActive.user}
-                                            messages={messages}
                                             onCancel={onCancel}
                                         /> 
                                 : null
