@@ -12,11 +12,6 @@ import { AuthContext } from "../../context/AuthContext"
 
 // const clickSocket = () => {
 
-
-// socket.on('poxos', ({poxos, success}) => {
-//     console.log(poxos, success)
-// })
-
 export const Messages = () => {
     const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([])

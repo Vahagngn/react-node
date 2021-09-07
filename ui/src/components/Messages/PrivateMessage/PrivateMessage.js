@@ -12,7 +12,7 @@ export const PrivateMessage = ({ user, onCancel }) => {
     const auth = useContext(AuthContext)
 
     function getPrivate() {
-        api.get(`/private-message/${user._id}`).then(res => {
+        api.get(`/private-message`).then(res => {
             setMessages(res)
         })
     }
@@ -20,15 +20,13 @@ export const PrivateMessage = ({ user, onCancel }) => {
     const sendMessage = () => {
         const message = document.getElementById('privateMessage')
 
-        // if(message){
-        //     socket.emit('private-message', {
-        //         message: message.value,
-        //         firstUserId: auth.userId, 
-        //         secondUserId: user._id,
-        //         chat_id: user._id,
-        //         user_id: null
-        //     })
-        // }
+        if(message){
+            socket.emit('private-message', {
+                message: message.value,
+                firstUserId: auth.userId, 
+                secondUserId: user._id
+            })
+        }
         api.post('/private-message', {
             message: message.value
         })
@@ -40,9 +38,9 @@ export const PrivateMessage = ({ user, onCancel }) => {
 
     useEffect(() => {
         socket.on('get-private', ({ privateMsg }) => {
-            const newMessages = privateMessages
-            newMessages.unshift(privateMsg)
-            setMessages([...newMessages])
+            const newPrivateMessage = privateMessages
+            newPrivateMessage.unshift(privateMsg)
+            setMessages([...newPrivateMessage])
         })
 
         return () => {
