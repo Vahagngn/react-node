@@ -4,22 +4,23 @@ import {useState, useEffect} from 'react';
 
 function AllMeetupsPage() {
 
- const {loadedMeetups, setLoadedMeetups} = useState(null);
+  const [loadedMeetups, setLoadedMeetups] = useState([]);
  const [isLoading, setIsLoading] = useState(true);
 
  useEffect(() => {
   getMeetups();
  }, []);
 
- async function getMeetups() {
+   async function getMeetups() {
+
   setIsLoading(true);
-   await api.get('/api/meetups').then(response => {
+   await api.get('/api/page/meetups').then((data) => {
     const meetups = [];
 
-    for(const key in response) {
+    for(const key in data) {
       const meetup = {
         id: key,
-        ...response[key] //add all key,value pairs from nested object to meetup object
+        ...data[key] //add all key,value pairs from nested object to meetup object
       };
       meetups.push(meetup);
     }
@@ -32,6 +33,17 @@ function AllMeetupsPage() {
   
  }
 
+  function deleteMeetupHandler(id) {
+    debugger
+    api.delete(`/api/page/meetup/delete/${id}`).then(res => {
+      
+       console.log(res, "res");
+     })
+  const filteredMeetups = loadedMeetups.filter(m => m.id !== id);
+  setLoadedMeetups(filteredMeetups);
+ 
+}
+
  if(isLoading) {
   return <section>
     <p>Loading...</p>
@@ -42,7 +54,17 @@ function AllMeetupsPage() {
         <h2 style = {{margin: "10px 0 0 50px"}}>All Meetups</h2>
   <ul>
      {
-       <MeetupItem meetups = {loadedMeetups} filteredMeetups = {setLoadedMeetups}/>
+       loadedMeetups.map((meetup, index) => {
+          return (
+
+            <MeetupItem 
+            key = {index} 
+            meetup = {meetup}
+            deleteMeetup = {deleteMeetupHandler}
+            /> 
+          )
+       })
+       
       }
   </ul>
   </section>
