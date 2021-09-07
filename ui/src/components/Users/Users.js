@@ -1,15 +1,18 @@
 import api from "../../Api";
 import { useEffect, useState, useContext } from 'react';
 import User from "./User/User";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export const Users = () => {
 
     const [users, setUsers] = useState(null);
+    const auth = useContext(AuthContext)
 
     function getDataUsers() {
         api.get('/api/auth/users/list').then(res => {
-            setUsers(res);
+            const participants = res.filter(u => u._id !== auth.userId)
+            setUsers(participants);
         })
     }
     useEffect(() => {

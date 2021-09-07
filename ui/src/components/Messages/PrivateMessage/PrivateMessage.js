@@ -1,30 +1,56 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../PrivateMessage/privateMessage.css'
-import socket from '../socket'
+import socket from '../../Messages/socket'
+import api from '../../../Api'
+import { AuthContext } from '../../../context/AuthContext'
+import { useAuth } from '../../hooks/auth.hook'
 
-export const PrivateMessage = ({ chatActive, user, onCancel, messages }) => {
+export const PrivateMessage = ({ user, onCancel }) => {
 
-    const sendMessagePrivate = (content) => {
-        messages = document.getElementById('privateMessage')
-        console.log(chatActive)
-        // console.log(messages.value)
+    const [privateMessages, setMessages] = useState([])
+    const { name, last_name } = useAuth()
+    const auth = useContext(AuthContext)
 
-        // console.log(messages, "MSG")
-        // if (user._id) {
-        //     socket.emit("private message", {
-        //         content,
-        //         message: messages.value,
-        //         name: user.name,
-        //         last_name: user.last_name,
-        //         to: user._id
-        //     });
-        // }
-        // messages.value = ''
+    function getPrivate() {
+        api.get(`/private-message`).then(res => {
+            setMessages(res)
+        })
     }
 
-    // useEffect(() => {
-    //     sendMessagePrivate()
-    // }, [])
+    const sendMessage = () => {
+        const message = document.getElementById('privateMessage')
+
+        if(message){
+            socket.emit('private-message', {
+                message: message.value,
+                firstUserId: auth.userId, 
+                secondUserId: user._id
+            })
+        }
+        api.post('/private-message', {
+            message: message.value
+        })
+        console.log(user, 'participant')
+        console.log(auth.userId, 'localParticipant')
+        
+        message.value = ''
+    }
+
+    useEffect(() => {
+        socket.on('get-private', ({ privateMsg }) => {
+            const newPrivateMessage = privateMessages
+            newPrivateMessage.unshift(privateMsg)
+            setMessages([...newPrivateMessage])
+        })
+
+        return () => {
+            socket.off('get-private')
+        }
+    }, [privateMessages])
+
+    useEffect(() => {
+        getPrivate()
+    }, [])
 
     return (
         <div className="privateMessageContainer">
@@ -43,30 +69,58 @@ export const PrivateMessage = ({ chatActive, user, onCancel, messages }) => {
                 />
             </div>
             <div className="sendBtn">
-                <button type="button" className="btn btn-default btn-sm" onClick={sendMessagePrivate}>
+                <button type="button" className="btn btn-default btn-sm" onClick={sendMessage}>
                     <span className="glyphicon glyphicon-envelope"></span> Send
                 </button>
             </div>
-            {/* { */}
-                {/* // messages.length ? */}
-                {/* // messages.map((messageText, index) => { */}
-                        <div className="messageContainer">
-                            <p className="userName">Name : &nbsp;</p>
-                            <p className="userText">Message text</p>
-                        </div>
-                    {/* // }) */}
-                    {/* // : '' */}
-            {/* // } */}
+
+            {
+                privateMessages.length ?
+                    privateMessages.map((privateMessageText, index) => {
+                        return (
+                            <div className="messageContainer" key={index}>
+                                <p className="userName">{name + ' ' + last_name} : &nbsp; </p>
+                                <p className="userText">{privateMessageText.message}</p>
+                            </div>
+                        )
+                    })
+                    : ''
+            }
         </div>
     )
 }
 
 // messages.length ?
 //     messages.map((messageText, index) => {
-//         return (
-//             <div className="nameMessage" key={index}>
-//                 <p className="userName">{messageText.name} {messageText.last_name} : &nbsp;</p>
-//                 <p style={{ color: 'gray' }}>{messageText.message}</p>
-//             </div>
-//         )
+
 //     }) : ''
+
+
+// const sendMessagePrivate = (content) => {
+    //     const privateMessage = document.getElementById('privateMessage')
+
+    //     socket.emit('message', {
+    //         message: privateMessage.value,
+    //         name: user.name,
+    //         last_name: user.last_name,
+    //         global: false,
+    //         private: true
+    //     })
+    //     console.log(privateMessage.value)
+    //     privateMessage.value = ''
+    // }
+
+    // const getPrivate = () => {
+    //     api.get('/api/private/message').then(res => {
+    //         setPrivate(res)
+    //         console.log(res)
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     getPrivate()
+    // }, [])
+
+    // useEffect(() => {
+    //     sendMessagePrivate()
+    // }, [])
