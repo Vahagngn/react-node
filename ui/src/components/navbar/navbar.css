@@ -7,11 +7,23 @@ table {
     padding: 0 50px;
     box-sizing: border-box;
 }
-.nav-mobile{
-    width:100%
+
+
+.userName,
+.logout
+{
+    display: flex;
 }
-.userName span{
+.userName .name {
     font-size: 10px;
-    color: lightgreen;
-    margin-top: 5px;
+    
+}
+.userName {
+    margin-right: 10px;
+}
+.userName .icon {
+    margin-right: 5px;
+}
+.logout{
+    padding: 0;
 }

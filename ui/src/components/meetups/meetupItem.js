@@ -10,7 +10,7 @@ const MeetupItem = (props) => {
 
    //  const {favorites, setFavorites} = useState(null);
    const favorites = [];
-   const itemIsFavorite = {};
+   const itemIsFavorite = false;
 
 
 
@@ -25,6 +25,12 @@ const MeetupItem = (props) => {
     }
     // setFavorites(fav);
     favorites.concat(fav);
+
+      favorites.forEach(meetup => {
+        if(meetup.id === favMeetup.id) {
+          itemIsFavorite = true;
+        }
+      });
     //   itemIsFavorite = favorites.some( meetup => {
     //   meetup.id = favMeetup.id;
     // })
@@ -52,9 +58,9 @@ const MeetupItem = (props) => {
     <li >
       <Card>
      <div >
-       <p>Meetup Title:</p>
-       <p>Meetup Address:</p>
-       <p>Description:</p>
+       <p>Meetup Title:{props.title}</p>
+       <p>Meetup Address:{props.address}</p>
+       <p>Description:{props.description}</p>
      </div>
      <div  className = {classes.buttons}>
        {

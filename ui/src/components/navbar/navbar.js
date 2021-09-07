@@ -33,8 +33,13 @@ function Navbar() {
                             <li><NavLink to="/links" activeClassName="active" exact>Links</NavLink></li>
                             <li><NavLink to="/users/list" activeClassName="active">Users List</NavLink></li>
                             <li style={{marginRight: '15rem'}}><NavLink to="/messages" activeClassName="active">Messages</NavLink></li>
-                            <li className = "userName">{name} {last_name} <span>online</span></li>  
-                            <li style={{marginRight: '0'}}><a href="/routespage" onClick={logoutHandler}>Logout</a></li>
+                            <li className = "userName"> 
+                            <span className = "icon"><i className="small material-icons">account_circle </i> </span>
+                             
+                            <span className = "name">{name} {last_name} </span>
+                            </li>  
+                            <li className="logout" style={{marginRight: '0'}}>
+                            <a href="/routespage" onClick={logoutHandler}>Logout</a></li>
                         </ul>
                      
                     </div>
