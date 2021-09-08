@@ -1,45 +1,35 @@
 import MeetupItem from './meetupItem';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import api from '../../Api';
-
+import FavoritesContext from './store/favorite.context';
 
 function FavoritesPage() {
 
   const [loadedFavorites, setLoadedFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const favoritesCtx = useContext(FavoritesContext);
 
 
   useEffect(() => {
     getFavorites();
    }, []);
+
+//GET 
  function getFavorites() {
     setIsLoading(true);
+    debugger
      api.get('/api/address/favorites ').then(response => {
-       debugger
-      const favorites = [];
-  
-      for(const key in response) {
-        const favorite = {
-          id: key,
-          ...response[key] //add all key,value pairs from nested object to meetup object
-        };
-        favorites.push(favorite);
-      }
-   
-      setLoadedFavorites(favorites);
+      setLoadedFavorites(response);
       setIsLoading(false);
-  
      });
    }
 
    
-  function deleteMeetupHandler(id) {
-    debugger
-    api.delete(`/api/address/favorite/delete/${id}`).then(res => {
-      
-       console.log(res, "res");
-     })
-  const filteredFavMeetups = loadedFavorites.filter(m => m.id !== id);
+   //DELETE FROM FAVORITES
+  function deleteFavMeetupHandler(id) {
+  //   debugger
+   favoritesCtx.removeFavorite(id);
+  const filteredFavMeetups = loadedFavorites.filter(m => m._id !== id);
   setLoadedFavorites(filteredFavMeetups);
 }
 
@@ -49,6 +39,7 @@ function FavoritesPage() {
     <p>Loading...</p>
   </section>
 }
+
   return <section>
   <h2 style = {{margin: "10px 0 0 50px"}}>Favorite Meetups</h2>
     <ul>
@@ -59,7 +50,7 @@ function FavoritesPage() {
             <MeetupItem 
             key = {index} 
             meetup = {meetup}
-            deleteMeetup = {deleteMeetupHandler}
+            deleteFavMeetup = {deleteFavMeetupHandler}
             /> 
           )
        })

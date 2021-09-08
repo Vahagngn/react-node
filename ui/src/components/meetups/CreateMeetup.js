@@ -5,19 +5,15 @@ import {useHistory} from 'react-router-dom';
 function CreateMeetupPage() {
   const history = useHistory();
 
- async function AddMeetupHandler(meetupData) {
-    // const meetup = {
-    //   title: meetupData.title,
-    //   address: meetupData.address,
-    //   description: meetupData.description,
-    // }
-    await api.post('/api/page/meetup/create', {
+  function AddMeetupHandler(meetupData) {
+    const meetup = {
       title: meetupData.title,
       address: meetupData.address,
       description: meetupData.description,
-     });
+    }
+     api.post('/api/page/meetup/create', meetup);
 
-     history.replace('/');
+     history.replace('/allmeetups');
   }
   return <section>
   <h2 style = {{margin: "10px 0 0 50px"}}>Create New Meetup</h2>

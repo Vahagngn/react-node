@@ -24,7 +24,7 @@ function Navbar() {
                     <div className="nav-wrapper">
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                                       {/* Loged user Name */}
-                            <li><NavLink to="/allmeetups" activeClassName="active">All Meetups</NavLink></li>
+                            <li><NavLink to="/allmeetups" activeClassName="active" exact>All Meetups</NavLink></li>
                             <li><NavLink to="/newMeetup" activeClassName="active">Create Meetup</NavLink></li>
                             <li><NavLink to="/favorites" activeClassName="active">Favorite Meetups</NavLink></li>
                             <li><NavLink to="/" activeClassName="active" exact>Todos</NavLink></li>
