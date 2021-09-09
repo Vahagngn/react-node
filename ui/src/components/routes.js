@@ -27,7 +27,7 @@ export const useRoutes = isAuthenticated => {
                     <Route path="/allmeetups" component={AllMeetupsPage} />
                     <Route path="/newMeetup" component={CreateMeetupPage} />
                     <Route path="/favorites" component={FavoritesPage} />
-                    <Redirect to="/createpage" />
+                    <Redirect to="/" />
                 </Switch>
             </div>
         )
@@ -38,7 +38,7 @@ export const useRoutes = isAuthenticated => {
             <Switch>
                 <Route path="/routespage" component={AuthPage} exact />
                 <Route path="/registration" component={RegistrationPage} />
-                <Redirect to="/createpage" />
+                <Redirect to="/routespage" />
             </Switch>
         </div>
     )

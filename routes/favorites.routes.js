@@ -24,8 +24,8 @@ router.delete('/favorite/delete/:id', async (req,res) => {
 })
 
 // router.delete('/meetup/delete/:id', async (req,res) => {
-//     const meetupDelete = await Favorites.find({}).lean().deleteOne({ _id: req.params.id })
-//     return res.json({ meetupDelete });
+//     const favoritesDelete = await Favorites.find({}).lean().deleteOne({ _id: req.params.id })
+//     return res.json({ favoritesDelete });
 // })
 
 module.exports = router

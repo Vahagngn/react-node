@@ -12,23 +12,22 @@ function AllMeetupsPage() {
 
 
  function getMeetups() {
-   debugger
+  //  debugger
   setIsLoading(true);
   api.get('/api/page/meetups').then(res => {
     setLoadedMeetups(res)
+    console.log(res);
   })
     setIsLoading(false);
 }
 
 async function deleteMeetupHandler(id) {
-  debugger
+  // debugger
   const filteredMeetups = loadedMeetups.filter(metup => metup._id !== id)
   setLoadedMeetups(filteredMeetups);
   const response = await fetch(`/api/page/meetup/delete/${id}`, {
       method: "DELETE"
   });
-
-
   favoritesCtx.removeFavorite(id);
   const filteredFavMeetups = favoritesCtx.favorites.filter(m => m._id !== id);
   console.log(filteredFavMeetups);
@@ -81,7 +80,7 @@ useEffect(() => {
 
  //DELETE FROM Favorites
 function deleteFavMeetupHandler(id) {
-  debugger
+  // debugger
   favoritesCtx.removeFavorite(id);
   const filteredFavMeetups = favoritesCtx.favorites.filter(m => m._id !== id);
   setLoadedFavorites(filteredFavMeetups);

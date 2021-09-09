@@ -14,12 +14,12 @@ export function FavoritesContextProvider(props) {
 
 
   function addfavoritesHandler(favoriteMeetup){
-  debugger;
-    console.log(favoriteMeetup);
+  // debugger;
+    console.log(favoriteMeetup, "favorite context");
     setUserFavorites((prevUserFavorites) => {
       return prevUserFavorites.concat(favoriteMeetup);
     });
-    api.post('/api/address/favorite/create', favoriteMeetup);
+    // api.post('/api/page/meetup/create', favoriteMeetup);
   }
 
 
@@ -31,7 +31,7 @@ export function FavoritesContextProvider(props) {
     });
     // const filteredFavMeetups = userFavorites.filter(m => m._id !== meetupId);
     // setUserFavorites(filteredFavMeetups);
-    api.delete(`/api/address/favorite/delete/${meetupId}`);
+    api.delete(`/api/page/meetup/delete/${meetupId}`);
     console.log('deleted from favorites')
   }
 

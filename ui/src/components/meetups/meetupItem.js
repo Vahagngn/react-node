@@ -13,7 +13,7 @@ function MeetupItem(props){
 
 
  function ToggleFavoriteHandler(favMeetupId) {
-   debugger
+  //  debugger
 if(itemIsFavorite) {
   props.deleteFavMeetup(favMeetupId);
   // favoritesCtx.removeFavorite(favMeetupId);
@@ -24,7 +24,9 @@ if(itemIsFavorite) {
     // _id: favMeetupId, 
     title: props.meetup.title,
     address: props.meetup.address,
-    description: props.meetup.description
+    description: props.meetup.description,
+    meetupsId: favMeetupId,
+    isFavorite: true
   }
 
   favoritesCtx.addFavorite(fav);
@@ -71,7 +73,7 @@ if(itemIsFavorite) {
      </div>
      <div  className = {classes.buttons}>
        {
-           location.pathname !== '/favorites' && ( <div>  <button className = "btn" onClick = {() => {ToggleFavoriteHandler(props.meetup._id)}}> {itemIsFavorite ? 'Remove from favorites': 'To Favorite'}</button></div>)
+           location.pathname !== '/favorites' && ( <div>  <button className = "btn" onClick = {() => {ToggleFavoriteHandler(props.meetup.meetupsId)}}> {itemIsFavorite ? 'Remove from favorites': 'To Favorite'}</button></div>)
        }
        <div>  <button className = "btn" onClick = {() =>  {(location.pathname === '/favorites') ?  deleteFavMeetupHandler(props.meetup._id): deleteMeetupHandler(props.meetup._id)}}>Delete</button></div>
      </div>

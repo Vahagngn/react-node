@@ -8,7 +8,7 @@ function FavoritesPage() {
   const [loadedFavorites, setLoadedFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const favoritesCtx = useContext(FavoritesContext);
-
+  const favorites = [];
 
   useEffect(() => {
     getFavorites();
@@ -17,10 +17,15 @@ function FavoritesPage() {
 //GET 
  function getFavorites() {
     setIsLoading(true);
-    debugger
-     api.get('/api/address/favorites ').then(response => {
-      setLoadedFavorites(response);
-      setIsLoading(false);
+    // debugger
+     api.get('/api/page/meetups').then(response => {
+       response.map((meetup) => {
+         if(meetup.isFavorite === true) {
+         favorites.push(meetup);
+          setLoadedFavorites(favorites);
+          setIsLoading(false);
+         }
+       })
      });
    }
 
@@ -42,6 +47,7 @@ function FavoritesPage() {
 
   return <section>
   <h2 style = {{margin: "10px 0 0 50px"}}>Favorite Meetups</h2>
+  <h5 style = {{margin: "10px 0 0 50px"}}>Total: <span>{favoritesCtx.totalFavorites}</span></h5>
     <ul>
     {
        loadedFavorites.map((meetup, index) => {

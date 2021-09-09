@@ -12,7 +12,9 @@ router.post('/meetup/create', async (req, res) => {
     const meetupCreate = new Meetups({
         title: req.body.title,
         address: req.body.address,
-        description: req.body.description
+        description: req.body.description,
+        meetupsId: req.body.meetupsId,
+        isFavorite: req.body.isFavorite
     })
 
     await meetupCreate.save()
