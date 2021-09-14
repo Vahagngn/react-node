@@ -3,22 +3,22 @@ import api from '../../Api'
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useAuth } from '../../components/hooks/auth.hook';
 import './messages.css'
-import socket from './socket'
 import { PrivateMessage } from './PrivateMessage/PrivateMessage';
 import { AuthContext } from "../../context/AuthContext"
+import connectToSocket from './socket'
 
-
-// const socket = io('http://localhost:5000', { transports : ['websocket','polling', 'flashsocket'] })
-
-// const clickSocket = () => {
 
 export const Messages = () => {
     const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([])
-    const [chatActive,setChatActive] = useState()
+    const [chatActive,setChatActive] = useState({
+        user: null,
+        messages: null
+    })
 
     const auth = useContext(AuthContext)
 
+    const socket = connectToSocket(auth.userId)
     const { name, last_name } = useAuth()
 
     function getDataUsers() {
@@ -35,19 +35,24 @@ export const Messages = () => {
         })
     }
 
-    const onUserClickHandler = (e) => {
-        setChatActive({user: null})
-        // if(users.find(u => u._id == e.target.querySelector('p').innerHTML)) {
-            // setChatActive(true)
-        // }
+    const onUserClickHandler = async (e) => {
+        setChatActive({user: null, messages: null})
         const user_id = e.target.querySelector('p').innerHTML;
-        setChatActive({user: users.filter(user => user._id == user_id)[0]});
+        const chatAndMessages = await api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${users.filter(user => user._id == user_id)[0]._id}`)
+        setChatActive({user: users.filter(user => user._id == user_id)[0], messages: chatAndMessages.messages});
     }
 
-    useEffect(() => {
-        if(!chatActive) return
-        api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${chatActive.user._id}`)
-    }, [chatActive])
+    // useEffect(() => {
+    //     if(!chatActive.user) return
+
+        // async function getChatAndMessages(){
+        //     // const chatAndMessages = await api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${chatActive.user._id}`)
+        //     console.log(chatAndMessages, 'chatAndMessages')
+        //     setChatActive(prevChat => [prevChat, {messages: chatAndMessages.messages}])
+        //     console.log(chatActive)
+        // }
+        // getChatAndMessages()
+    // }, [chatActive])
 
     const onCancel = () => {
         setChatActive(null)
@@ -155,6 +160,7 @@ export const Messages = () => {
                             {
                                 chatActive ? 
                                 <PrivateMessage
+                                            chatActive={chatActive}
                                             user={chatActive.user}
                                             onCancel={onCancel}
                                         /> 

@@ -1,44 +1,43 @@
 import React, { useContext, useEffect, useState } from 'react'
 import '../PrivateMessage/privateMessage.css'
-import socket from '../../Messages/socket'
 import api from '../../../Api'
 import { AuthContext } from '../../../context/AuthContext'
 import { useAuth } from '../../hooks/auth.hook'
+import connectToSocket from '../socket'
 
-export const PrivateMessage = ({ user, onCancel }) => {
+export const PrivateMessage = ({ user, onCancel, chatActive }) => {
 
     const [privateMessages, setMessages] = useState([])
     const { name, last_name } = useAuth()
     const auth = useContext(AuthContext)
-
+    const socket = connectToSocket()
+   
+   
     function getPrivate() {
         api.get(`/private-message`).then(res => {
-            setMessages(res)
+           setMessages(res)
         })
     }
 
     const sendMessage = () => {
-        const message = document.getElementById('privateMessage')
+        const privateMessages = document.getElementById('privateMessage')
 
-        if(message){
+        if (privateMessages) {
             socket.emit('private-message', {
-                message: message.value,
-                firstUserId: auth.userId, 
+                message: privateMessages.value,
+                privateName: name,
+                privateLast: last_name,
+                firstUserId: auth.userId,
                 secondUserId: user._id
             })
         }
-        api.post('/private-message', {
-            message: message.value
-        })
-        console.log(user, 'participant')
-        console.log(auth.userId, 'localParticipant')
-        
-        message.value = ''
+
+        privateMessages.value = ''
     }
 
     useEffect(() => {
         socket.on('get-private', ({ privateMsg }) => {
-            const newPrivateMessage = privateMessages
+            const newPrivateMessage = chatActive.messages
             newPrivateMessage.unshift(privateMsg)
             setMessages([...newPrivateMessage])
         })
@@ -46,81 +45,50 @@ export const PrivateMessage = ({ user, onCancel }) => {
         return () => {
             socket.off('get-private')
         }
-    }, [privateMessages])
+    }, [chatActive.messages])
 
     useEffect(() => {
         getPrivate()
     }, [])
 
     return (
-        <div className="privateMessageContainer">
-            <div className="sendTextContainer">
-                <div className="headerContainer">
-                    <h5>{user.name.charAt(0) + '.' + user.last_name} </h5>
-                    <button className="btn onCancel" onClick={onCancel}>&#8617;</button>
+        user
+            ? <div className="privateMessageContainer">
+                <div className="sendTextContainer">
+                    <div className="headerContainer">
+                        <h5>{user.name.charAt(0) + '.' + user.last_name} </h5>
+                        <button className="btn onCancel" onClick={onCancel}>&#8617;</button>
+                    </div>
+                    <input style={{
+                        border: "1px solid #26a69a",
+                        marginTop: "10px"
+                    }}
+                        className="sendText"
+                        type='text'
+                        id="privateMessage"
+                    />
                 </div>
-                <input style={{
-                    border: "1px solid #26a69a",
-                    marginTop: "10px"
-                }}
-                    className="sendText"
-                    type='text'
-                    id="privateMessage"
-                />
-            </div>
-            <div className="sendBtn">
-                <button type="button" className="btn btn-default btn-sm" onClick={sendMessage}>
-                    <span className="glyphicon glyphicon-envelope"></span> Send
-                </button>
-            </div>
+                <div className="sendBtn">
+                    {/* {() => deleteUser(todo._id)} */}
+                    <button type="button" className="btn btn-default btn-sm" onClick={sendMessage}>
+                        <span className="glyphicon glyphicon-envelope"></span> Send
+            </button>
+                </div>
 
-            {
-                privateMessages.length ?
-                    privateMessages.map((privateMessageText, index) => {
-                        return (
-                            <div className="messageContainer" key={index}>
-                                <p className="userName">{name + ' ' + last_name} : &nbsp; </p>
-                                <p className="userText">{privateMessageText.message}</p>
-                            </div>
-                        )
-                    })
-                    : ''
-            }
-        </div>
+                {
+                    chatActive.user ?
+                        <div className="messageContainer" >
+                            {chatActive.messages.length ? chatActive.messages.map((data, index) => {
+                                return (
+                                    <div key={index} style={{ display: "flex" }}>
+                                        <p className="userName">{data.privateName + ' ' + data.privateLast} : &nbsp; </p>
+                                        <p className="userText">{data.message}</p>
+                                    </div>
+                                )
+                            }) : null}
+                        </div>
+                        : ''
+                }
+            </div> : null
     )
 }
-
-// messages.length ?
-//     messages.map((messageText, index) => {
-
-//     }) : ''
-
-
-// const sendMessagePrivate = (content) => {
-    //     const privateMessage = document.getElementById('privateMessage')
-
-    //     socket.emit('message', {
-    //         message: privateMessage.value,
-    //         name: user.name,
-    //         last_name: user.last_name,
-    //         global: false,
-    //         private: true
-    //     })
-    //     console.log(privateMessage.value)
-    //     privateMessage.value = ''
-    // }
-
-    // const getPrivate = () => {
-    //     api.get('/api/private/message').then(res => {
-    //         setPrivate(res)
-    //         console.log(res)
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     getPrivate()
-    // }, [])
-
-    // useEffect(() => {
-    //     sendMessagePrivate()
-    // }, [])

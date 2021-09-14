@@ -31,17 +31,6 @@ const MeetupItem = (props) => {
           itemIsFavorite = true;
         }
       });
-    //   itemIsFavorite = favorites.some( meetup => {
-    //   meetup.id = favMeetup.id;
-    // })
-    console.log(favorites);
-    console.log(itemIsFavorite);
-// favorites.some(meetup => {
-//     meetup.id === id;
-//    });
-  //  console.log(favorites.some(meetup => {
-  //   meetup.id === id;
-  //  }))
 
   api.post('/api/favMeetup', favorites).
   then(response => {console.log(response.data.id)}).
