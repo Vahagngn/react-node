@@ -34,15 +34,15 @@ function NewMeetupForm(props) {
   return <Card>
     <form className ={classes.form} onSubmit = {SubmitHandler}>
        <div className="input-field">
-         <label For="title"></label>
+         <label htmlFor="title"></label>
          <input type="text" id="Title" required ref = {titleInputRef} placeholder = "Meetup Title"/>
        </div>
        <div className="input-field">
-         <label For="address"></label>
+         <label htmlFor="address"></label>
          <input type="text" id="address" required ref = {addressInputRef} placeholder = "Address"/>
        </div>
        <div className="input-field">
-         <label For="description"></label>
+         <label htmlFor="description"></label>
          <input type="text" id="description" required ref = {descriptionInputRef} placeholder = "Description"/>
   
        </div>

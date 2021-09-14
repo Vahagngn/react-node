@@ -1,6 +1,7 @@
 import '../global.css'
 import api from "../../Api";
 import { useEffect, useState } from 'react';
+import { NavLink } from "react-router-dom"
 
 function Create() {
 
@@ -25,7 +26,7 @@ function Create() {
                 <label></label>
             </div>
 
-            <button type="submit" className="btn">Create</button>
+            <NavLink to="/"><button type="submit" className="btn">Create</button></NavLink>
         </form>
     );
 }

@@ -11,6 +11,7 @@ function Navbar() {
     const auth = useContext(AuthContext)
     const history = useHistory()
 
+
     const logoutHandler = () => {
         // event.preventDefault()
         auth.logout()
@@ -20,13 +21,13 @@ function Navbar() {
 
     if(!!token) {
         return (
-                <nav className="blue darken-4 navbar">
+                <nav className="blue darken-4 navbar"> 
                     <div className="nav-wrapper">
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                                       {/* Loged user Name */}
-                            <li><NavLink to="/allmeetups" activeClassName="active">All Meetups</NavLink></li>
+                            <li><NavLink to="/allmeetups" activeClassName="active" exact>All Meetups</NavLink></li>
                             <li><NavLink to="/newMeetup" activeClassName="active">Create Meetup</NavLink></li>
-                            <li><NavLink to="/favorites" activeClassName="active">Favorite Meetups</NavLink></li>
+                            <li><NavLink to="/favorites" activeClassName="active">Favorite Meetups </NavLink></li>
                             <li><NavLink to="/" activeClassName="active" exact>Todos</NavLink></li>
                             <li><NavLink to="/create" activeClassName="active">Create Todos</NavLink></li>
                             <li><NavLink to="/createpage" activeClassName="active" exact>Create Link</NavLink></li>
