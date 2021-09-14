@@ -39,7 +39,7 @@ if(itemIsFavorite) {
 }
  }
 
-
+  
  function deleteFavMeetupHandler(id) {
    props.deleteFavMeetup(id);
   // favoritesCtx.removeFavorite(id);

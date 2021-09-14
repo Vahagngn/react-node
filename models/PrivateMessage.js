@@ -1,10 +1,11 @@
 const {Schema, model, Types} = require('mongoose')
-const mongoose = require('mongoose')
 
-const privateMessage = new Schema ({
+const privateSchema = new Schema ({
     message: { type: String, required: true },
     user_id: { type: String },
-    chat_id: { type: Types.ObjectId, ref: 'Chats' }
+    chat_id: { type: Types.ObjectId, ref: 'Chats' },
+    privateName: { type: String },
+    privateLast: { type: String, required: true }
 })
 
 const chats = new Schema ({
@@ -12,9 +13,15 @@ const chats = new Schema ({
     secondUserId: { type: String },
 })
 
-module.exports = model('MessagesPrivate', privateMessage)
-module.exports = model('Chats', chats)
+// module.exports = model('MessagesPrivate', privateMessage)
+// module.exports = model('Chats', chats)
+const privateMessage = model('MessagesPrivate', privateSchema)
+const chat = model('Chats', chats)
 
+module.exports = {
+    privateMessage,
+    chat
+}
 
 
 // const PrivateModel = model('MessagesPrivate', privateMessage)

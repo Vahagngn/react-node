@@ -51,7 +51,7 @@
 }
 
 .messageContainer {
-    display: flex;
+    /* display: flex; */
     position: relative;
     margin: auto;
     width: 85%;

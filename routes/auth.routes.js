@@ -11,9 +11,6 @@ const auth = require('../middleware/auth.middleware')
 router.get('/users/list', async (req, res) => {
         const users = await User.find({}).lean()
         res.send(users.reverse());
-   
-    // const authUser = users.filter(user => user._id == users._id)
-    // console.log(authUser)
 })
 
 
