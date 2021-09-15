@@ -39,7 +39,7 @@ function Navbar() {
                             <li ><NavLink to="/allmeetups"  activeClassName = "active"  >All Meetups</NavLink></li>
                             <li  ><NavLink to="/newMeetup" activeClassName = "active"  >Create Meetup</NavLink></li>
                             <li><NavLink to="/favorites" activeClassName = "active" >Favorite Meetups </NavLink></li>
-                            <li exact><NavLink to="/" activeClassName = "active" exact >Todos</NavLink></li>
+                            <li><NavLink to="/" activeClassName = "active" exact >Todos</NavLink></li>
                             <li ><NavLink to="/create" activeClassName = "active"  >Create Todos</NavLink></li>
                             <li ><NavLink to="/createpage" activeClassName = "active"  >Create Link</NavLink></li>
                             <li ><NavLink to="/links" activeClassName = "active"  >Links</NavLink></li>
