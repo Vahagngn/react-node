@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const todoRoutes = require('./routes/todos')
+const todoRoutes = require('./ui/build/index.html')
 const path = require('path')
 const config = require('config')
 const cors = require('cors')
@@ -12,7 +13,7 @@ const http = require('http').Server(app);
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', './ui/build/index.html'));
 });
 
 
