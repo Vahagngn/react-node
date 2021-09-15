@@ -35,7 +35,7 @@ mongoose.connect(config.get('mongoUri'), {
 //                                    <----- SOCKET ----->
 require('./socket/socket')(http)
 
-http.listen(process.env.PORT || PORT, () => console.log(`Server has been started on port ${PORT}...`))
+http.listen(process.env.PORT || 5000, () => console.log(`Server has been started on port ${PORT}...`))
 // const io = require('socket.io')(server)
 
 
