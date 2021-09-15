@@ -12,39 +12,51 @@ function Navbar() {
     const history = useHistory()
 
 
+
     const logoutHandler = () => {
         // event.preventDefault()
         auth.logout()
         // history.push('/routespage')
     }
 
-    function openBar() {
-        const x = document.getElementById("navbar");
-        if (x.className === "navbar") {
-            x.className += " responsive";
-          } else {
-            x.className = "navbar";
-          }
+    function toggleBar() {
+        debugger
+        const sidebar = document.getElementById("navbar");
 
+        if (sidebar.className === "navbar") {
+            sidebar.className += " responsive";
+          } else {
+            sidebar.className = "navbar";
+        }
+
+        if(sidebar.className === "responsive") {
+           
+           var hideSidebar = document.getElementById("navbar");
+           document.onClick = (div) => {
+               if(div.target.id !== "navbar") {
+                hideSidebar.style.display = "none";
+               }
+           }
+        }
     }
+
     const { token, name, last_name } = useAuth()
 
     if(!!token) {
         return (
-                <section className = "navbar" id = "navbar"> 
-                    <div className = "navbar-wrapper" >
-                        <ul className = "items">
+                <div className = "navbar " id = "navbar"> 
+                        <ul className = "navLinks">
                                       {/* Loged user Name */}
                             <div className = "menu">
-                            <li ><NavLink to="/allmeetups"  activeClassName = "active"  >All Meetups</NavLink></li>
-                            <li  ><NavLink to="/newMeetup" activeClassName = "active"  >Create Meetup</NavLink></li>
-                            <li><NavLink to="/favorites" activeClassName = "active" >Favorite Meetups </NavLink></li>
-                            <li><NavLink to="/" activeClassName = "active" exact >Todos</NavLink></li>
-                            <li ><NavLink to="/create" activeClassName = "active"  >Create Todos</NavLink></li>
-                            <li ><NavLink to="/createpage" activeClassName = "active"  >Create Link</NavLink></li>
-                            <li ><NavLink to="/links" activeClassName = "active"  >Links</NavLink></li>
-                            <li ><NavLink to="/users/list" activeClassName = "active" >Users List</NavLink></li>
-                            <li style={{marginRight: '15rem'}} activeClassName = "active" ><NavLink to="/messages" >Messages</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/allmeetups"  activeclassname = "active"  >All Meetups</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/newMeetup" activeclassname = "active"  >Create Meetup</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/favorites" activeclassname = "active" >Favorite Meetups </NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/" activeclassname = "active" exact >Todos</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/create" activeclassname = "active"  >Create Todos</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/createpage" activeclassname = "active"  >Create Link</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/links" activeclassname = "active"  >Links</NavLink></li>
+                            <li onClick = {toggleBar}><NavLink to="/users/list" activeclassname = "active" >Users List</NavLink></li>
+                            <li onClick = {toggleBar} style={{marginRight: '15rem'}} activeclassname = "active" ><NavLink to="/messages" >Messages</NavLink></li>
                           
                             </div>
                             <div className = "username-menu">
@@ -57,12 +69,11 @@ function Navbar() {
                             </div>
                             
                         </ul>
-                    </div>
-                    <div className = "bars">
-                            <span><i className="small material-icons" onClick = {openBar}>dehaze</i></span>
+                   
+                    <div className = "toggle" id = "toggle">
+                            <span><i className="small material-icons" onClick = {toggleBar}>dehaze</i></span>
                         </div>
-                     
-                </section>
+                </div>
         );
     }
     return (
