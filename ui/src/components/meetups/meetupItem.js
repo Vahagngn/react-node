@@ -10,12 +10,13 @@ function MeetupItem(props){
  const favoritesCtx = useContext(FavoritesContext);
  const itemIsFavorite = favoritesCtx.itemIsFavorite(props.meetup._id);
  const location = useLocation();
+ let buttonText = "";
 
 
  function ToggleFavoriteHandler(favMeetupId) {
-  //  debugger
+  //  
 if(itemIsFavorite) {
-  props.deleteFavMeetup(favMeetupId);
+  buttonText = "To Favorite";
   // favoritesCtx.removeFavorite(favMeetupId);
   console.log("removed from favorites");
 } else {
@@ -30,6 +31,7 @@ if(itemIsFavorite) {
   }
 
   favoritesCtx.addFavorite(fav);
+  buttonText = "Added to favorites";
   // setFavorites(fav);
   // favorites.concat(fav);
 
@@ -39,18 +41,31 @@ if(itemIsFavorite) {
 }
  }
 
-  
+
  function deleteFavMeetupHandler(id) {
-   props.deleteFavMeetup(id);
-  // favoritesCtx.removeFavorite(id);
+  //  if(props.meetup.isFavorite === true) {
+  //   props.deleteFavMeetup(id);
+  //   // favoritesCtx.removeFavorite(id);
+  //  }
+  props.deleteFavMeetup(id);
  }
  function deleteMeetupHandler(id) {
+   console.log(id, "meetupi pkhntsvadz id");
+   console.log(favoritesCtx.favorites, "favorite list");
+  favoritesCtx.favorites.map((meetup) => {
+    if(meetup.meetupsId === id) {
+      console.log(meetup._id, "meetup._id");
+      console.log(meetup.meetupsId, "meetup.meetupsId");
+      props.deleteFavMeetup(meetup._id);
+    }
+  });
   props.deleteMeetup(id);
+
   // favoritesCtx.removeFavorite(id);
 }
 
 //  function itemIsFavoriteHandler(meetupId){
-//   // debugger
+//   // 
 //   return favorites.some(meetup => 
 //     meetup.id === meetupId)
 // }
@@ -67,13 +82,13 @@ if(itemIsFavorite) {
     <li key = {props.meetup._id}>
       <Card>
      <div >
-       <p>Meetup Title:{props.meetup.title}</p>
-       <p>Meetup Address:{props.meetup.address}</p>
-       <p>Description:{props.meetup.description}</p>
+       <p>Meetup Title: { props.meetup.title}</p>
+       <p>Meetup Address: { props.meetup.address}</p>
+       <p>Description:  { props.meetup.description}</p>
      </div>
      <div  className = {classes.buttons}>
        {
-           location.pathname !== '/favorites' && ( <div>  <button className = "btn" onClick = {() => {ToggleFavoriteHandler(props.meetup.meetupsId)}}> {itemIsFavorite ? 'Remove from favorites': 'To Favorite'}</button></div>)
+           location.pathname !== '/favorites' && ( <div>  <button className = "btn" onClick = {() => {ToggleFavoriteHandler(props.meetup._id)}}> {itemIsFavorite ? 'Added to favorites': 'To Favorite'}</button></div>)
        }
        <div>  <button className = "btn" onClick = {() =>  {(location.pathname === '/favorites') ?  deleteFavMeetupHandler(props.meetup._id): deleteMeetupHandler(props.meetup._id)}}>Delete</button></div>
      </div>
