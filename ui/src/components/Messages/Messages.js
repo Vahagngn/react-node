@@ -97,7 +97,7 @@ export const Messages = () => {
     useEffect(() => {
         getDataUsers()
         getMessages()
-    }, [])
+    }, [messages])
 
     window.socket = socket
     return (

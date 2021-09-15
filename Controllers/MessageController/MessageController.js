@@ -7,6 +7,16 @@ exports.globalChat = async function (req, res) {
     res.send(messages.reverse());
 }
 
+// exports.globalPost = async function (req, res) {
+//     const messagesCreate = new MessagesModel({
+//         name: req.body.name,
+//         last_name: req.body.last_name,
+//         message: req.body.message
+//     })
+
+//     await messagesCreate.save()
+// }
+
 exports.privateChatId = async function(req, res) {
     try {
         const { firstUserId: firstUserId, secondUserId: secondUserId } = req.query

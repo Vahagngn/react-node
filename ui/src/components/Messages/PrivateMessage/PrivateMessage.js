@@ -13,11 +13,11 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
     const socket = connectToSocket()
    
    
-    function getPrivate() {
-        api.get(`/private-message`).then(res => {
-           setMessages(res)
-        })
-    }
+    // function getPrivate() {
+        // api.get(`/private-message`).then(res => {
+        //    setMessages(res)
+        // })
+    // }
 
     const sendMessage = () => {
         const privateMessages = document.getElementById('privateMessage')
@@ -48,6 +48,14 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
     }, [chatActive.messages])
 
     useEffect(() => {
+        const getPrivate = async () => {
+            try{
+                const response = await api.get(`/private-message`);
+                   setMessages(response)    
+            } catch (err) { 
+                console.log(err) 
+            }        
+        }
         getPrivate()
     }, [])
 

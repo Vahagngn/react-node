@@ -6,7 +6,7 @@ const {chat, privateMessage} = require('../models/PrivateMessage')
 module.exports = server => {
     const io = socket(server)
 
-    io.on('connection', socket => {
+    io.on('connection', (socket) => {
 
         const { userId } = socket.handshake.query
         socket.join(userId)
