@@ -3,11 +3,76 @@ table {
     margin: auto;
     box-sizing: border-box;;
 }
-.nav-wrapper{
-    padding: 0 50px;
+.navbar {
+    width: 100%;
+    height: 58px;
+    background-color: darkblue;
     box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 99999 ;
+    padding-left:15px;
+    padding-right: 15px;
+  }
+
+  .navLinks {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+/* .navbar-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding-left:10%;
+    padding-right: 10%;
+    background-color: red;
+} */
+.navbar NavLink {
+    cursor: pointer;
 }
 
+
+.menu {
+    height: 100%;
+    width:50%;
+    margin: 0;
+    color: white;
+    display: flex;
+    justify-content:space-between;
+    box-sizing: border-box;  
+}
+.username-menu {
+    color: white;
+    display: flex;
+    justify-content:space-between;
+}
+
+
+.navLinks li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+ 
+}
+.navLinks li a{
+    color: white;
+  
+}
+.toggle {
+    opacity: 0;
+    visibility: hidden;
+    color: white;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
 
 .userName,
 .logout
@@ -26,4 +91,81 @@ table {
 }
 .logout{
     padding: 0;
+}
+
+@media screen and (max-width: 1024px) {
+    /* body {
+        overflow-x: hidden;
+    } */
+    .toggle {
+        opacity: 1;
+        visibility: visible;
+        color: white;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        cursor: pointer;
+    }
+    .menu {
+        width: 50% ;
+        position: absolute;
+        right: 0;
+        top: 7vh;
+        height: 100vh;
+        background-color: darkblue;
+        /* transform: translateX(100%); */
+    }
+    .menu .navLinks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       
+    }
+    .username-menu {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1400px) {
+ 
+    .menu {
+        width:90%;
+    }
+    .username-menu  {
+        width: 20%;
+      
+    }
+}
+@media screen and (max-width: 1024px) {
+    
+
+     .navbar.responsive {
+        opacity: 1;
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        right: 0px;
+        width: 300px;
+        height: 100vh;
+        background-color: darkblue;
+    }
+    .responsive .navbar.active {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        width: 300px;
+        height: 100vh;
+        background-color: darkblue;
+    }
+    .responsive .menu  {
+        height: 100%;
+        max-width:1000px;
+        width: 100%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+    .responsive .username-menu  {
+       display: none;
+    }
 }

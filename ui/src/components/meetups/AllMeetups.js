@@ -9,27 +9,38 @@ function AllMeetupsPage() {
   const [loadedFavorites, setLoadedFavorites] = useState([]);
  const [isLoading, setIsLoading] = useState(true);
  const favoritesCtx = useContext(FavoritesContext);
+ const meetups = [];
 
-
- function getMeetups() {
-  //  debugger
-  setIsLoading(true);
-  api.get('/api/page/meetups').then(res => {
-    setLoadedMeetups(res)
-    console.log(res);
-  })
-    setIsLoading(false);
+ async function getMeetups() {
+   
+  // setIsLoading(true);
+ await api.get('/api/page/meetups').then(res => {
+    res.map(meetup => {
+      if(meetup.isFavorite === false)
+      {
+        meetups.push(meetup);
+        setLoadedMeetups(meetups)
+        // setIsLoading(false)
+        console.log(res);
+      }
+    })
+  });
 }
 
 async function deleteMeetupHandler(id) {
-  // debugger
+  
   const filteredMeetups = loadedMeetups.filter(metup => metup._id !== id)
   setLoadedMeetups(filteredMeetups);
   const response = await fetch(`/api/page/meetup/delete/${id}`, {
       method: "DELETE"
   });
-  favoritesCtx.removeFavorite(id);
-  const filteredFavMeetups = favoritesCtx.favorites.filter(m => m._id !== id);
+  // favoritesCtx.favorites.map(meetup => {
+  //   if(meetup.meetupsId === id) {
+  //     favoritesCtx.removeFavorite(meetup._id);
+  //   }
+  // });
+ 
+  const filteredFavMeetups = favoritesCtx.favorites.filter(m => m.meetupsId !== id);
   console.log(filteredFavMeetups);
   setLoadedFavorites(filteredFavMeetups);
 }
@@ -60,7 +71,7 @@ useEffect(() => {
 
  //DELETE FROM MEETUPS
 //   function deleteMeetupHandler(id) {
-//     // debugger
+//     // 
 //     // api.delete(`/api/page/meetup/delete/${id}`).then(res => {
       
 //     //    console.log(res, "res");
@@ -80,22 +91,23 @@ useEffect(() => {
 
  //DELETE FROM Favorites
 function deleteFavMeetupHandler(id) {
-  // debugger
+  // 
   favoritesCtx.removeFavorite(id);
   const filteredFavMeetups = favoritesCtx.favorites.filter(m => m._id !== id);
   setLoadedFavorites(filteredFavMeetups);
 }
 
- if(isLoading) {
-  return <section>
-    <p>Loading...</p>
-  </section>
-}
+//  if(isLoading) {
+//   return <section>
+//     <p>Loading...</p>
+//   </section>
+// }
 
     return <section>
         <h2 style = {{margin: "10px 0 0 50px"}}>All Meetups</h2>
-  <ul>
+  <ul className = "listSection">
      {
+       loadedMeetups.length ?
        loadedMeetups.map((meetup, index) => {
           return (
 
@@ -106,7 +118,7 @@ function deleteFavMeetupHandler(id) {
             deleteFavMeetup = {deleteFavMeetupHandler}
             /> 
           )
-       })
+       }): <p>List is empty</p>
        
       }
   </ul>

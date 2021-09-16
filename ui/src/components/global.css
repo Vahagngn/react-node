@@ -68,6 +68,15 @@
     background-color: cornflowerblue;
 }
 
+.items li > .active{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.listSection p {
+    margin-left: 50px;
+}
+
 #input-field input {
     text-align: center;
 }

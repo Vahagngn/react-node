@@ -12,47 +12,56 @@ function Navbar() {
     const history = useHistory()
 
 
+
     const logoutHandler = () => {
         // event.preventDefault()
         auth.logout()
         // history.push('/routespage')
     }
+
+
     const { token, name, last_name } = useAuth()
 
     if(!!token) {
         return (
-                <nav className="blue darken-4 navbar"> 
-                    <div className="nav-wrapper">
-                        <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                      {/* Loged user Name */}
-                            <li><NavLink to="/allmeetups" activeClassName="active" exact>All Meetups</NavLink></li>
-                            <li><NavLink to="/newMeetup" activeClassName="active">Create Meetup</NavLink></li>
-                            <li><NavLink to="/favorites" activeClassName="active">Favorite Meetups </NavLink></li>
-                            <li><NavLink to="/" activeClassName="active" exact>Todos</NavLink></li>
-                            <li><NavLink to="/create" activeClassName="active">Create Todos</NavLink></li>
-                            <li><NavLink to="/createpage" activeClassName="active" exact>Create Link</NavLink></li>
-                            <li><NavLink to="/links" activeClassName="active" exact>Links</NavLink></li>
-                            <li><NavLink to="/users/list" activeClassName="active">Users List</NavLink></li>
-                            <li style={{marginRight: '15rem'}}><NavLink to="/messages" activeClassName="active">Messages</NavLink></li>
-                            <li className = "userName"> 
-                            <span className = "icon"><i className="small material-icons">account_circle </i> </span>
-                             
-                            <span className = "name">{name} {last_name} </span>
-                            </li>  
-                            <li className="logout" style={{marginRight: '0'}}>
-                            <a href="/routespage" onClick={logoutHandler}>Logout</a></li>
-                        </ul>
-                     
-                    </div>
-                </nav>
+                <div className = "navbar " id = "navbar"> 
+                  {/* Loged user Name */}
+                <div className = "menu">
+                    <ul className = "navLinks">
+                            <li><NavLink to="/allmeetups"  activeclassname = "active"  >All Meetups</NavLink></li>
+                            <li><NavLink to="/newMeetup" activeclassname = "active"  >Create Meetup</NavLink></li>
+                            <li><NavLink to="/favorites" activeclassname = "active" >Favorite Meetups </NavLink></li>
+                            <li><NavLink to="/" activeclassname = "active" exact >Todos</NavLink></li>
+                            <li><NavLink to="/create" activeclassname = "active"  >Create Todos</NavLink></li>
+                            <li><NavLink to="/createpage" activeclassname = "active"  >Create Link</NavLink></li>
+                            <li><NavLink to="/links" activeclassname = "active"  >Links</NavLink></li>
+                            <li><NavLink to="/users/list" activeclassname = "active" >Users List</NavLink></li>
+                            <li  activeclassname = "active" ><NavLink to="/messages" >Messages</NavLink></li>
+                    </ul>
+                </div>
+   
+                <div className = "username-menu">
+                    <ul className = "navLinks">
+                        <li className = "userName" > 
+                        <span className = "icon"><i className="small material-icons">account_circle </i> </span>
+                        <span className = "name">{name} {last_name} </span>
+                        </li>  
+                        <li className="logout" style={{marginRight: '0'}}>
+                        <a href="/routespage" onClick={logoutHandler}>Logout</a></li>
+                    </ul>
+                </div>
+                <div className = "toggle" id = "toggle">
+                    <span><i className="small material-icons" >dehaze</i></span>
+                </div>
+                </div>
         );
     }
     return (
-        <nav className="blue darken-4 navbar">
-            <div className="nav-wrapper">
-                <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    <li><NavLink to="/routespage" activeClassName="active">Login</NavLink></li>
-                    <li><NavLink to="/registration" activeClassName="active">Registration</NavLink></li>
+        <nav className="navbar">
+            <div className="navbar-wrapper">
+                <ul className = "items">
+                    <li  ><NavLink to="/routespage" activeClassName = "active" exact>Login</NavLink></li>
+                    <li  ><NavLink to="/registration" activeClassName = "active" exact >Registration</NavLink></li>
                 </ul>
             </div>
         </nav>

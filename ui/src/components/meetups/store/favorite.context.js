@@ -14,17 +14,17 @@ export function FavoritesContextProvider(props) {
 
 
   function addfavoritesHandler(favoriteMeetup){
-  // debugger;
+
     console.log(favoriteMeetup, "favorite context");
     setUserFavorites((prevUserFavorites) => {
       return prevUserFavorites.concat(favoriteMeetup);
     });
-    // api.post('/api/page/meetup/create', favoriteMeetup);
+    api.post('/api/page/meetup/create', favoriteMeetup);
   }
 
 
   function removeFavoriteHandler(meetupId){
- 
+   
     setUserFavorites((prevUserFavorites) => {
      return prevUserFavorites.filter(prevMeetupsId => 
         prevMeetupsId._id !== meetupId);
@@ -38,7 +38,7 @@ export function FavoritesContextProvider(props) {
   function itemIsFavoriteHandler(meetupId){
 
     return userFavorites.some(meetup => 
-      meetup._id === meetupId)
+      meetup.meetupsId === meetupId)
   }
 
   const context = {
