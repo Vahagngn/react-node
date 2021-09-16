@@ -28,25 +28,26 @@ function Content() {
     }
 
     return (
-        todos !== null ?
-            <div className="contentContainer">
-                <h2 className="todosPage">Todos page</h2>
-                <ul>
-                    {
-                        todos.length ? 
-                            todos.map((todo, index) => {
-                                return (
-                                    <Todo 
-                                        key={index}
-                                        todo={todo}
-                                        deleteUser={deleteUser} 
-                                    />
-                                )
-                            }) : 
-                            <p>List is empty</p>
-                    }
-                </ul>
-            </div> : null
+        <div>asdasddsaasdads</div>
+        // todos !== null ?
+        //     <div className="contentContainer">
+        //         <h2 className="todosPage">Todos page</h2>
+        //         <ul>
+        //             {
+        //                 todos.length ? 
+        //                     todos.map((todo, index) => {
+        //                         return (
+        //                             <Todo 
+        //                                 key={index}
+        //                                 todo={todo}
+        //                                 deleteUser={deleteUser} 
+        //                             />
+        //                         )
+        //                     }) : 
+        //                     <p>List is empty</p>
+        //             }
+        //         </ul>
+        //     </div> : null
     );
 }
 

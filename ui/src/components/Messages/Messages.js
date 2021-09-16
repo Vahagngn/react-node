@@ -30,7 +30,7 @@ export const Messages = () => {
     }
 
     function getMessages() {
-        api.get('/messages').then(res => {
+        api.get('/messages/messages').then(res => {
             setMessages(res)
         })
     }
@@ -38,7 +38,7 @@ export const Messages = () => {
     const onUserClickHandler = async (e) => {
         setChatActive({user: null, messages: null})
         const user_id = e.target.querySelector('p').innerHTML;
-        const chatAndMessages = await api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${users.filter(user => user._id == user_id)[0]._id}`)
+        const chatAndMessages = await api.get(`/messages/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${users.filter(user => user._id == user_id)[0]._id}`)
         setChatActive({user: users.filter(user => user._id == user_id)[0], messages: chatAndMessages.messages});
     }
 

@@ -50,7 +50,7 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
     useEffect(() => {
         const getPrivate = async () => {
             try{
-                const response = await api.get(`/private-message`);
+                const response = await api.get(`/messages/private-message`);
                    setMessages(response)    
             } catch (err) { 
                 console.log(err) 
