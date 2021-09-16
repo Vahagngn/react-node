@@ -18,11 +18,11 @@ const http = require('http').Server(app);
 //   res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 // });
 app.use(
-  express.static(path.join(__dirname, "ui/build"))
+  express.static(path.join(__dirname, "build"))
 );
 
 app.get('/:path', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // app.get(`/:path`, (req, res) => {
