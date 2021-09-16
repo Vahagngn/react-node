@@ -28,7 +28,9 @@ function Content() {
     }
 
     return (
-        <div>asdasddsaasdads</div>
+        <div>
+            <h1>The page will be ready soon</h1>
+        </div>
         // todos !== null ?
         //     <div className="contentContainer">
         //         <h2 className="todosPage">Todos page</h2>
