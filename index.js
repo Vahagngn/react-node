@@ -21,11 +21,15 @@ app.use(
   express.static(path.join(__dirname, "ui/build"))
 );
 
-app.get(`/:path`, (req, res) => {
-  res.sendFile(
-      path.join(__dirname,  "/ui/build/index.html")
-    );
+app.get('/:path', (req, res) => {
+  res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 });
+
+// app.get(`/:path`, (req, res) => {
+//   res.sendFile(
+//       path.join(__dirname,  "/ui/build/index.html")
+//     );
+// });
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
