@@ -6,7 +6,7 @@ const config = require('config')
 const cors = require('cors')
 
 
-const PORT =  5000
+const PORT = process.env.PORT || 5000
 const app = express().use('*', cors());
 const http = require('http').Server(app);
 
@@ -35,7 +35,7 @@ mongoose.connect(config.get('mongoUri'), {
 //                                    <----- SOCKET ----->
 require('./socket/socket')(http)
 
-http.listen(process.env.PORT || PORT, () => console.log(`Server has been started on port ${PORT}...`))
+http.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
 // const io = require('socket.io')(server)
 
 
