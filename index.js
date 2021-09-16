@@ -9,7 +9,7 @@ dotenv.config()
 
 
 
-const PORT = process.env.PORT || 5000
+const PORT = 5000
 const app = express().use('*', cors());
 const http = require('http').Server(app);
 
@@ -29,7 +29,7 @@ app.get(`/:path`, (req, res) => {
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(todoRoutes)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
@@ -50,7 +50,7 @@ mongoose.connect(config.get('mongoUri'), {
 //                                    <----- SOCKET ----->
 require('./socket/socket')(http)
 
-http.listen(PORT, () => console.log(`Server has been started on port ${PORT}...`))
+http.listen(process.env.PORT || 5000, () => console.log(`Server has been started on port ${PORT}...`))
 // const io = require('socket.io')(server)
 
 
