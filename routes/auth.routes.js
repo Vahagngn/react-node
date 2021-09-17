@@ -39,7 +39,7 @@ router.post(
            .isLength({ min: 6 })
     ],
     async (req, res) => {
-    try {
+    // try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -60,9 +60,9 @@ router.post(
         await user.save()
         res.status(201).json({ message: 'User Created' })
 
-    }catch (e){
-        res.status(500).json({ message: 'Error'})
-    }
+    // }catch (e){
+    //     res.status(500).json({ message: 'Error'})
+    // }
 })
 
 // /api/auth/login
@@ -73,7 +73,7 @@ router.post(
         check('password', 'Enter password').exists()
     ],
     async (req, res) => {
-    try {
+    // try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -103,9 +103,9 @@ router.post(
 
          res.json({ token, userId: user.id, name: user.name, last_name: user.last_name})
 
-    }catch (e){
-        res.json({ message: 'Error'})
-    }
+    // }catch (e){
+    //     res.json({ message: 'Error'})
+    // }
 })
 
 module.exports = router
