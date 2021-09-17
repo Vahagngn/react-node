@@ -97,7 +97,7 @@ function deleteFavMeetupHandler(id) {
   <ul>
      {
        loadedMeetups.length ? 
-       loadedMeetups.map((meetup, index) => {
+       loadedMeetups.map( (meetup, index) => {
         return (
 
           <MeetupItem 
