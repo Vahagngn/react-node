@@ -73,7 +73,6 @@ router.post(
         check('password', 'Enter password').exists()
     ],
     async (req, res) => {
-        console.log('mtav');
     try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){

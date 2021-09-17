@@ -15,7 +15,6 @@ export function FavoritesContextProvider(props) {
 
   function addfavoritesHandler(favoriteMeetup){
   // debugger;
-    console.log(favoriteMeetup, "favorite context");
     setUserFavorites((prevUserFavorites) => {
       return prevUserFavorites.concat(favoriteMeetup);
     });
@@ -32,7 +31,6 @@ export function FavoritesContextProvider(props) {
     // const filteredFavMeetups = userFavorites.filter(m => m._id !== meetupId);
     // setUserFavorites(filteredFavMeetups);
     api.delete(`/api/page/meetup/delete/${meetupId}`);
-    console.log('deleted from favorites')
   }
 
   function itemIsFavoriteHandler(meetupId){

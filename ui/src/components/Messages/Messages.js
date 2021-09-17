@@ -42,18 +42,6 @@ export const Messages = () => {
         setChatActive({user: users.filter(user => user._id == user_id)[0], messages: chatAndMessages.messages});
     }
 
-    // useEffect(() => {
-    //     if(!chatActive.user) return
-
-        // async function getChatAndMessages(){
-        //     // const chatAndMessages = await api.get(`/get-or-create-chat?firstUserId=${auth.userId}&secondUserId=${chatActive.user._id}`)
-        //     console.log(chatAndMessages, 'chatAndMessages')
-        //     setChatActive(prevChat => [prevChat, {messages: chatAndMessages.messages}])
-        //     console.log(chatActive)
-        // }
-        // getChatAndMessages()
-    // }, [chatActive])
-
     const onCancel = () => {
         setChatActive(null)
     }

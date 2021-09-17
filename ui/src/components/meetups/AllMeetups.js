@@ -16,7 +16,6 @@ function AllMeetupsPage() {
   setIsLoading(true);
   api.get('/api/page/meetups').then(res => {
     setLoadedMeetups(res)
-    console.log(res);
   })
     setIsLoading(false);
 }
