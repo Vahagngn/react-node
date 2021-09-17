@@ -17,9 +17,7 @@ function MeetupItem(props){
 if(itemIsFavorite) {
   props.deleteFavMeetup(favMeetupId);
   // favoritesCtx.removeFavorite(favMeetupId);
-  console.log("removed from favorites");
 } else {
-  console.log("added to favorites");
   const fav = {
     // _id: favMeetupId, 
     title: props.meetup.title,

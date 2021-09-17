@@ -16,14 +16,13 @@ function AllMeetupsPage() {
   setIsLoading(true);
   api.get('/api/page/meetups').then(res => {
     setLoadedMeetups(res)
-    console.log(res);
   })
     setIsLoading(false);
 }
 
 async function deleteMeetupHandler(id) {
   // debugger
-  const filteredMeetups = loadedMeetups.filter(metup => metup._id !== id)
+  const filteredMeetups = loadedMeetups.length ? loadedMeetups.filter(metup => metup._id !== id) : null;
   setLoadedMeetups(filteredMeetups);
   const response = await fetch(`/api/page/meetup/delete/${id}`, {
       method: "DELETE"
@@ -96,18 +95,19 @@ function deleteFavMeetupHandler(id) {
         <h2 style = {{margin: "10px 0 0 50px"}}>All Meetups</h2>
   <ul>
      {
+       loadedMeetups.length ? 
        loadedMeetups.map((meetup, index) => {
-          return (
+        return (
 
-            <MeetupItem 
-            key = {index} 
-            meetup = {meetup}
-            deleteMeetup = {deleteMeetupHandler}
-            deleteFavMeetup = {deleteFavMeetupHandler}
-            /> 
-          )
-       })
-       
+          <MeetupItem 
+          key = {index} 
+          meetup = {meetup}
+          deleteMeetup = {deleteMeetupHandler}
+          deleteFavMeetup = {deleteFavMeetupHandler}
+          /> 
+        )
+     }) :
+     '' 
       }
   </ul>
   </section>

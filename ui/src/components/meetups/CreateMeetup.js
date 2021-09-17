@@ -13,7 +13,6 @@ function CreateMeetupPage() {
       meetupsId: meetupData.meetupsId,
       isFavorite: false
     }
-    console.log( meetup, "MEETUP" )
      api.post('/api/page/meetup/create', meetup);
 
      history.replace('/allmeetups');
