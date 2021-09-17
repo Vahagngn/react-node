@@ -22,6 +22,7 @@ app.use(
 );
 
 app.get('/:path', (req, res) => {
+  console.log('worked')
   res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 });
 
@@ -30,6 +31,8 @@ app.get('/:path', (req, res) => {
 //       path.join(__dirname,  "/ui/build/index.html")
 //     );
 // });
+
+
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
