@@ -4,6 +4,7 @@ const todoRoutes = require('./routes/todos')
 const path = require('path')
 const config = require('config')
 const cors = require('cors')
+const compression = require('compression');
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -17,6 +18,9 @@ const http = require('http').Server(app);
 // app.get("/", (req, res) => {
 //   res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 // });
+
+app.use(compression())
+
 app.use(
   express.static(path.join(__dirname, "ui/build"))
 );
