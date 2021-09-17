@@ -5,21 +5,12 @@ const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const auth = require('../middleware/auth.middleware')
 
 
 router.get('/users/list', async (req, res) => {
         const users = await User.find({}).lean()
         res.send(users.reverse());
 })
-
-
-// try {
-//     const links = await Link.find({ owner: req.user.userId })
-//     res.json(links)
-// } catch (e) {
-//     res.status(500).json({ message: 'Error' })
-// }
 
 router.delete('/delete/user/:id', async (req,res) => {
     const users = await User.find({}).lean().deleteOne({ _id: req.params.id })
@@ -39,7 +30,7 @@ router.post(
            .isLength({ min: 6 })
     ],
     async (req, res) => {
-    // try {
+    try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -60,9 +51,9 @@ router.post(
         await user.save()
         res.status(201).json({ message: 'User Created' })
 
-    // }catch (e){
-    //     res.status(500).json({ message: 'Error'})
-    // }
+    }catch (e){
+        res.status(500).json({ message: 'Error'})
+    }
 })
 
 // /api/auth/login
@@ -73,7 +64,7 @@ router.post(
         check('password', 'Enter password').exists()
     ],
     async (req, res) => {
-    // try {
+    try {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -103,9 +94,9 @@ router.post(
 
          res.json({ token, userId: user.id, name: user.name, last_name: user.last_name})
 
-    // }catch (e){
-    //     res.json({ message: 'Error'})
-    // }
+    }catch (e){
+        res.json({ message: 'Error'})
+    }
 })
 
 module.exports = router
