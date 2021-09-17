@@ -4,10 +4,12 @@
  const Link = require('../models/Link')
  const auth = require('../middleware/auth.middleware')
  const router = Router()
+ const dotenv = require('dotenv')
+ dotenv.config()
 
  router.post('/generate', auth, async (req, res) => {
      try {
-         const baseUrl = config.get('baseUrl')
+         const baseUrl = process.env.BASEURL
          const {from} = req.body
 
          const code = shortid.generate()

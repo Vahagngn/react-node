@@ -46,7 +46,7 @@ app.use('/api/address', require('./routes/favorites.routes'))
 app.use('/messages', require('./routes/messages.routes'))
 
 
-mongoose.connect(config.get('mongoUri'), {
+mongoose.connect((process.env.MONGODB_URI), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
