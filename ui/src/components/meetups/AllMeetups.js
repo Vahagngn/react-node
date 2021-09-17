@@ -9,6 +9,7 @@ function AllMeetupsPage() {
   const [loadedFavorites, setLoadedFavorites] = useState([]);
  const [isLoading, setIsLoading] = useState(true);
  const favoritesCtx = useContext(FavoritesContext);
+<<<<<<< HEAD
  const meetups = [];
 
  async function getMeetups() {
@@ -30,6 +31,22 @@ function AllMeetupsPage() {
 async function deleteMeetupHandler(id) {
   
   const filteredMeetups = loadedMeetups.filter(metup => metup._id !== id)
+=======
+
+
+ function getMeetups() {
+  //  debugger
+  setIsLoading(true);
+  api.get('/api/page/meetups').then(res => {
+    setLoadedMeetups(res)
+  })
+    setIsLoading(false);
+}
+
+async function deleteMeetupHandler(id) {
+  // debugger
+  const filteredMeetups = loadedMeetups.length ? loadedMeetups.filter(metup => metup._id !== id) : null;
+>>>>>>> upstream/heroku-test
   setLoadedMeetups(filteredMeetups);
   const response = await fetch(`/api/page/meetup/delete/${id}`, {
       method: "DELETE"
@@ -107,19 +124,19 @@ function deleteFavMeetupHandler(id) {
         <h2 style = {{margin: "10px 0 0 50px"}}>All Meetups</h2>
   <ul className = "listSection">
      {
-       loadedMeetups.length ?
+       loadedMeetups.length ? 
        loadedMeetups.map((meetup, index) => {
-          return (
+        return (
 
-            <MeetupItem 
-            key = {index} 
-            meetup = {meetup}
-            deleteMeetup = {deleteMeetupHandler}
-            deleteFavMeetup = {deleteFavMeetupHandler}
-            /> 
-          )
-       }): <p>List is empty</p>
-       
+          <MeetupItem 
+          key = {index} 
+          meetup = {meetup}
+          deleteMeetup = {deleteMeetupHandler}
+          deleteFavMeetup = {deleteFavMeetupHandler}
+          /> 
+        )
+     }) :
+     '' 
       }
   </ul>
   </section>
