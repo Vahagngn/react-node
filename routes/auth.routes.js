@@ -69,6 +69,7 @@ router.post(
     async (req, res) => {
         console.log(req.body)
     try {
+            console.log('try');
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({
@@ -99,6 +100,7 @@ router.post(
          res.json({ token, userId: user.id, name: user.name, last_name: user.last_name})
 
     }catch (e){
+            console.log('catch', e);
         res.json({ message: 'Error'})
     }
 })
