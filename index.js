@@ -33,7 +33,7 @@ app.get('/:path', (req, res) => {
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(todoRoutes)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
