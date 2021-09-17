@@ -19,6 +19,32 @@ function Navbar() {
         // history.push('/routespage')
     }
 
+   
+
+    const barButton = document.getElementById('toggle');
+    const navLinks  = document.querySelectorAll('.navLinks li');
+
+    const toggleHandler = ()=> {
+        const sidebar = document.getElementById('menu');
+        sidebar.classList.toggle('active');
+
+        navLinks.forEach((link, index) => {
+            console.log(link);
+            link.addEventListener('click', ()  => {
+                console.log("clickeed on the link");
+                sidebar.classList.remove('active');
+            });
+        })
+
+        // window.onClick = (e) => {
+        //     if(e.target.id != "toggle" && e.target.id != "menu") {
+        //         sidebar.classList.remove('active');
+        //     }
+        // }
+    }
+
+    
+
 
     const { token, name, last_name } = useAuth()
 
@@ -26,7 +52,7 @@ function Navbar() {
         return (
                 <div className = "navbar " id = "navbar"> 
                   {/* Loged user Name */}
-                <div className = "menu">
+                <div className = "menu" id = "menu">
                     <ul className = "navLinks">
                             <li><NavLink to="/allmeetups"  activeclassname = "active"  >All Meetups</NavLink></li>
                             <li><NavLink to="/newMeetup" activeclassname = "active"  >Create Meetup</NavLink></li>
@@ -51,7 +77,7 @@ function Navbar() {
                     </ul>
                 </div>
                 <div className = "toggle" id = "toggle">
-                    <span><i className="small material-icons" >dehaze</i></span>
+                    <span onClick = {toggleHandler}><i className="small material-icons" >dehaze</i></span>
                 </div>
                 </div>
         );

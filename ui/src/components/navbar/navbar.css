@@ -94,9 +94,9 @@ table {
 }
 
 @media screen and (max-width: 1024px) {
-    /* body {
+    body {
         overflow-x: hidden;
-    } */
+    }
     .toggle {
         opacity: 1;
         visibility: visible;
@@ -107,13 +107,14 @@ table {
         cursor: pointer;
     }
     .menu {
-        width: 50% ;
+        width: 40%;
         position: absolute;
         right: 0;
-        top: 7vh;
+        top: 58px;
         height: 100vh;
         background-color: darkblue;
-        /* transform: translateX(100%); */
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
     }
     .menu .navLinks {
         display: flex;
@@ -121,14 +122,19 @@ table {
         align-items: center;
        
     }
+   
     .username-menu {
-        width: 40%;
+        width: 30%;
+    }
+
+    .menu.active {
+      transform: translateX(0%);
     }
 }
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1400px) and (min-width: 1024px){
  
     .menu {
-        width:90%;
+        width:70%;
     }
     .username-menu  {
         width: 20%;
@@ -138,7 +144,7 @@ table {
 @media screen and (max-width: 1024px) {
     
 
-     .navbar.responsive {
+     /* .navbar.responsive {
         opacity: 1;
         visibility: visible;
         position: absolute;
@@ -167,5 +173,5 @@ table {
     }
     .responsive .username-menu  {
        display: none;
-    }
+    } */
 }
