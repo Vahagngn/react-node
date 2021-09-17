@@ -21,7 +21,7 @@ app.use(
   express.static(path.join(__dirname, "ui/build"))
 );
 
-app.get('/:path', (req, res) => {
+app.get('/*', (req, res) => {
   console.log('worked')
   res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 });
