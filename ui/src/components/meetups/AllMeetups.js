@@ -42,8 +42,6 @@ function AllMeetupsPage() {
 
 
 async function deleteMeetupHandler(id) {
-  
-  // const filteredMeetups = loadedMeetups.filter(metup => metup._id !== id)
   const filteredMeetups = loadedMeetups.length ? loadedMeetups.filter(metup => metup._id !== id) : null;
   setLoadedMeetups(filteredMeetups);
   const response = await fetch(`/api/page/meetup/delete/${id}`, {

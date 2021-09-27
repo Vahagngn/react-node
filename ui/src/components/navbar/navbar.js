@@ -32,35 +32,8 @@ function Navbar() {
             });
         })
 
-        // window.onClick = (e) => {
-        //     if(e.target.id != "toggle" && e.target.id != "menu") {
-        //         sidebar.classList.remove('active');
-        //     }
-        // }
     }
 
-    
-
-
-    // function toggleBar() {
-    //     debugger
-    //     const sidebar = document.getElementById("navbar");
-
-    //     if (sidebar.className === "navbar") {
-    //         sidebar.className += " responsive";
-    //       } else {
-    //         sidebar.className = "navbar";
-    //     }
-
-    //     if(sidebar.className === "responsive") {
-           
-    //        var hideSidebar = document.getElementById("navbar");
-    //        document.onClick = (div) => {
-    //            if(div.target.id !== "navbar") {
-    //             hideSidebar.style.display = "none";
-    //            }
-    //        }
-    //     }
     
 
     const { token, name, last_name } = useAuth();
