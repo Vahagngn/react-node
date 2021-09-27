@@ -74,6 +74,27 @@ table {
     cursor: pointer;
 }
 
+.navLinks li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+ 
+}
+.navLinks li a{
+    color: white;
+  
+}
+.toggle {
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
 .userName,
 .logout
 {

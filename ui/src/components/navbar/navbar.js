@@ -19,19 +19,15 @@ function Navbar() {
         // history.push('/routespage')
     }
 
-   
-
-    const barButton = document.getElementById('toggle');
     const navLinks  = document.querySelectorAll('.navLinks li');
 
     const toggleHandler = ()=> {
         const sidebar = document.getElementById('menu');
+        const navLinks  = document.querySelectorAll('.navLinks li');
         sidebar.classList.toggle('active');
 
         navLinks.forEach((link, index) => {
-            console.log(link);
             link.addEventListener('click', ()  => {
-                console.log("clickeed on the link");
                 sidebar.classList.remove('active');
             });
         })
@@ -46,7 +42,28 @@ function Navbar() {
     
 
 
-    const { token, name, last_name } = useAuth()
+    // function toggleBar() {
+    //     debugger
+    //     const sidebar = document.getElementById("navbar");
+
+    //     if (sidebar.className === "navbar") {
+    //         sidebar.className += " responsive";
+    //       } else {
+    //         sidebar.className = "navbar";
+    //     }
+
+    //     if(sidebar.className === "responsive") {
+           
+    //        var hideSidebar = document.getElementById("navbar");
+    //        document.onClick = (div) => {
+    //            if(div.target.id !== "navbar") {
+    //             hideSidebar.style.display = "none";
+    //            }
+    //        }
+    //     }
+    
+
+    const { token, name, last_name } = useAuth();
 
     if(!!token) {
         return (
@@ -55,7 +72,7 @@ function Navbar() {
                 <div className = "menu" id = "menu">
                     <ul className = "navLinks">
                             <li><NavLink to="/allmeetups"  activeclassname = "active"  >All Meetups</NavLink></li>
-                            <li><NavLink to="/newMeetup" activeclassname = "active"  >Create Meetup</NavLink></li>
+                            <li ><NavLink to="/newMeetup" activeclassname = "active"  >Create Meetup</NavLink></li>
                             <li><NavLink to="/favorites" activeclassname = "active" >Favorite Meetups </NavLink></li>
                             <li><NavLink to="/" activeclassname = "active" exact >Todos</NavLink></li>
                             <li><NavLink to="/create" activeclassname = "active"  >Create Todos</NavLink></li>
@@ -79,6 +96,7 @@ function Navbar() {
                 <div className = "toggle" id = "toggle">
                     <span onClick = {toggleHandler}><i className="small material-icons" >dehaze</i></span>
                 </div>
+       
                 </div>
         );
     }
@@ -91,7 +109,8 @@ function Navbar() {
                 </ul>
             </div>
         </nav>
-);
+    );
+    
 }
 
 export default Navbar;

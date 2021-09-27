@@ -48,12 +48,8 @@ if(itemIsFavorite) {
   props.deleteFavMeetup(id);
  }
  function deleteMeetupHandler(id) {
-   console.log(id, "meetupi pkhntsvadz id");
-   console.log(favoritesCtx.favorites, "favorite list");
   favoritesCtx.favorites.map((meetup) => {
     if(meetup.meetupsId === id) {
-      console.log(meetup._id, "meetup._id");
-      console.log(meetup.meetupsId, "meetup.meetupsId");
       props.deleteFavMeetup(meetup._id);
     }
   });
