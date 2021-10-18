@@ -3,14 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import {FavoritesContextProvider} from './components/meetups/store/favorite.context'
 
 ReactDOM.render(
-  <FavoritesContextProvider>
   <React.StrictMode>
     <App />
-  </React.StrictMode>
-  </FavoritesContextProvider>,
+  </React.StrictMode>,
  document.getElementById('root')
 );
 

@@ -38,8 +38,6 @@ app.use(todoRoutes)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
 app.use('/t', require('./routes/redirect.routes'))
-app.use('/api/page', require('./routes/meetups.routes'))
-app.use('/api/address', require('./routes/favorites.routes'))
 app.use('/messages', require('./routes/messages.routes'))
 
 
