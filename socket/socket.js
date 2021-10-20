@@ -13,7 +13,7 @@ module.exports = server => {
 
         // Global message socket start
         socket.on('message', messageInfo => {
-            socket.emit('get-message', {
+            io.emit('get-message', {
                 msg: messageInfo
             })
             const message = new MessagesModel({
@@ -30,9 +30,7 @@ module.exports = server => {
         
         socket.on("private-message", async (privateMessageInfo) => {
             const { message, firstUserId, secondUserId } = privateMessageInfo
-            socket.emit('get-private', {
-                privateMsg: privateMessageInfo
-            })
+            
             
             const privateChat = await chat.findOne({
                 $and: [
@@ -40,8 +38,14 @@ module.exports = server => {
                     { $or: [{ firstUserId: secondUserId }, { secondUserId: secondUserId }] },
                 ]
             })
+
+            io.emit('get-private', {
+                privateMsg: privateMessageInfo,
+                secondUserId: secondUserId,
+                firstUserId: firstUserId
+            })
             
-            const privateText = new privateMessage({
+            const privateText =  new privateMessage({
                 message,
                 user_id: firstUserId,
                 chat_id: privateChat._id,
@@ -50,9 +54,6 @@ module.exports = server => {
             })
             privateText.save()
         })
-
-
-
     })
 }
 

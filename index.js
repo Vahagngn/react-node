@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-// const todoRoutes = require('./routes/todos')
+const todoRoutes = require('./routes/todos')
 const path = require('path')
 const config = require('config')
 const cors = require('cors')
@@ -13,17 +13,13 @@ const PORT = process.env.PORT || 5000
 const app = express().use('*', cors());
 const http = require('http').Server(app);
 
-// app.use(express.static(path.join(__dirname, 'ui/build')));
-// app.get("/", (req, res) => {
+// app.use(
+//   express.static(path.join(__dirname, "ui/build"))
+// );
+
+// app.get('/:path', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
 // });
-app.use(
-  express.static(path.join(__dirname, "ui/build"))
-);
-
-app.get('/:path', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ui/build', 'index.html'));
-});
 
 // app.get(`/:path`, (req, res) => {
 //   res.sendFile(
@@ -33,8 +29,8 @@ app.get('/:path', (req, res) => {
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
-// app.use(express.static(path.join(__dirname, 'public')))
-app.use('/', require('./routes/todos'))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(todoRoutes)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
 app.use('/t', require('./routes/redirect.routes'))
