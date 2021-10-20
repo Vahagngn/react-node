@@ -1,5 +1,5 @@
 {
     "jwtSecret": "mySecretText",
     "mongoUri": "mongodb+srv://Vahag:sun777sun..@cluster0.lnp4r.mongodb.net/todos",
-    "baseUrl": "http://testvh94.herokuapp.com/"
+    "baseUrl": "https://testvh94.herokuapp.com/"
 }
