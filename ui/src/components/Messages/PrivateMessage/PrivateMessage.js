@@ -35,27 +35,31 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
         privateMessages.value = ''
     }
 
+
     useEffect(() => {
-        socket.on('get-private', ({ privateMsg }) => {
+        socket.on('get-private', ({ privateMsg, secondUserId, firstUserId }) => {
             const newPrivateMessage = chatActive.messages
             newPrivateMessage.unshift(privateMsg)
             setMessages([...newPrivateMessage])
+            // socket.emit("getMessage", {
+            //     secondUserId,
+            //     firstUserId,
+            //     privateMsg
+            // });
         })
 
         return () => {
             socket.off('get-private')
         }
-    }, [chatActive.messages])
+    }, [chatActive.messages, socket])
+
+    function getPrivate() {
+        api.get(`/messages/private-message`).then(res => {
+           setMessages(res)
+        })
+    }
 
     useEffect(() => {
-        const getPrivate = async () => {
-            try{
-                const response = await api.get(`/messages/private-message`);
-                   setMessages(response)    
-            } catch (err) { 
-                console.log(err) 
-            }        
-        }
         getPrivate()
     }, [])
 
@@ -87,6 +91,7 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
                     chatActive.user ?
                         <div className="messageContainer" >
                             {chatActive.messages.length ? chatActive.messages.map((data, index) => {
+                                // console.log(chatActive)
                                 return (
                                     <div key={index} style={{ display: "flex" }}>
                                         <p className="userName">{data.privateName + ' ' + data.privateLast} : &nbsp; </p>

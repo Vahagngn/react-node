@@ -80,12 +80,12 @@ export const Messages = () => {
         return () => {
             socket.off('get-message')
         }
-    }, [messages])
+    }, [socket, messages])
 
     useEffect(() => {
         getDataUsers()
         getMessages()
-    }, [messages])
+    }, [])
 
     window.socket = socket
     return (
@@ -151,6 +151,7 @@ export const Messages = () => {
                                             chatActive={chatActive}
                                             user={chatActive.user}
                                             onCancel={onCancel}
+                                            // getDataUsers={getDataUsers}
                                         /> 
                                 : null
                             }

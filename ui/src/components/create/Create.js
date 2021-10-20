@@ -1,6 +1,4 @@
 import '../global.css'
-import api from "../../Api";
-import { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom"
 
 function Create() {
