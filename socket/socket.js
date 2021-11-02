@@ -1,5 +1,6 @@
 const socket = require('socket.io')
 const MessagesModel = require('../models/Message')
+const User = require('../models/User')
 const {chat, privateMessage} = require('../models/PrivateMessage')
 
 
@@ -9,6 +10,9 @@ module.exports = server => {
     io.on('connection', (socket) => {
 
         const { userId } = socket.handshake.query
+        User.findOneAndUpdate({_id: userId}, {isOnline: true}, {new: true}).then((u) => {
+           
+        })
         socket.join(userId.toString())
 
         // Global message socket start
@@ -54,6 +58,12 @@ module.exports = server => {
                 privateMsg: privateMessageInfo
             })
 
+        })
+
+        socket.once('disconnect', () => {
+            User.findOneAndUpdate({_id: userId}, {isOnline: false}, {new: true}).then((u) => {
+               
+            })
         })
 
         //  -------------------------------- Private message text END  -------------------------------------------------------------

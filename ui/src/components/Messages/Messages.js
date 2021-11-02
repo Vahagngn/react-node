@@ -21,16 +21,25 @@ export const Messages = () => {
     const socket = connectToSocket(auth.userId)
     const { name, last_name } = useAuth()
 
-    function getDataUsers() {
-        api.get('/api/auth/users/list')
-            .then(res => {
-                const participants = res.filter(user => user._id !== auth.userId)  
-                setUsers(participants);
-
-                
-                // socket.emit('login',{userId: users.map( (user) => user._id )});              
-            })
+    function getOnlineUsers() {
+        api.get('/api/auth/online-users')
+        .then(res => {
+            console.log(res)
+            const participants = res.filter(user => user._id !== auth.userId)
+            setUsers(participants)
+        })
+        
     }
+    // function getDataUsers() {
+    //     api.get('/api/auth/users/list')
+    //         .then(res => {
+    //             const participants = res.filter(user => user._id !== auth.userId)  
+    //             setUsers(participants);
+
+
+    //             // socket.emit('login',{userId: users.map( (user) => user._id )});              
+    //         })
+    // }
 
     function getMessages() {
         api.get('/messages/messages').then(res => {
@@ -87,7 +96,8 @@ export const Messages = () => {
     }, [socket, messages])
 
     useEffect(() => {
-        getDataUsers()
+        // getDataUsers()
+        getOnlineUsers()
         getMessages()
     }, [])
 

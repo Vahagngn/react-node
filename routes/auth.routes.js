@@ -6,13 +6,14 @@ const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const auth = require('../middleware/auth.middleware')
-
-
+const { sendOnlineUsers } = require('../Controllers/AuthRouterController')
+ 
 router.get('/users/list', async (req, res) => {
         const users = await User.find({}).lean()
         res.send(users.reverse());
 })
 
+router.get('/online-users', sendOnlineUsers)
 
 // try {
 //     const links = await Link.find({ owner: req.user.userId })

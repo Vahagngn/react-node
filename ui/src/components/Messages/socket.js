@@ -7,7 +7,7 @@ export default function connectToSocket(userId) {
     if(connectToSocket.exists) {
         return connectToSocket.instance
     }
-    const socket = io(`https://testvh94.herokuapp.com/?userId=${userId}`, { transports: ['websocket'] })
+    const socket = io(`http://localhost:5000/?userId=${userId}`, { transports: ['websocket'] })
     connectToSocket.exists = true
     connectToSocket.instance = socket
 
