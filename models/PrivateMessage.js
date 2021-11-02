@@ -5,7 +5,7 @@ const privateSchema = new Schema ({
     user_id: { type: String },
     chat_id: { type: Types.ObjectId, ref: 'Chats' },
     privateName: { type: String },
-    privateLast: { type: String, required: true }
+    privateLast: { type: String }
 })
 
 const chats = new Schema ({

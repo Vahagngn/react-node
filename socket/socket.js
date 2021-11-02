@@ -9,17 +9,19 @@ module.exports = server => {
     io.on('connection', (socket) => {
 
         const { userId } = socket.handshake.query
-        socket.join(userId)
+        socket.join(userId.toString())
 
         // Global message socket start
         socket.on('message', messageInfo => {
+
             io.emit('get-message', {
                 msg: messageInfo
             })
             const message = new MessagesModel({
                 name: messageInfo.name,
                 last_name: messageInfo.last_name,
-                message: messageInfo.message
+                message: messageInfo.message,
+                date: messageInfo.date
             });
             message.save()
         })
@@ -28,9 +30,8 @@ module.exports = server => {
         
         //  -------------------------------- Private message text START  -------------------------------------------------------------
         
-        socket.on("private-message", async (privateMessageInfo) => {
+        socket.on(`private-message`, async (privateMessageInfo) => {
             const { message, firstUserId, secondUserId } = privateMessageInfo
-            
             
             const privateChat = await chat.findOne({
                 $and: [
@@ -39,12 +40,6 @@ module.exports = server => {
                 ]
             })
 
-            io.emit('get-private', {
-                privateMsg: privateMessageInfo,
-                secondUserId: secondUserId,
-                firstUserId: firstUserId
-            })
-            
             const privateText =  new privateMessage({
                 message,
                 user_id: firstUserId,
@@ -53,6 +48,11 @@ module.exports = server => {
                 privateLast: privateMessageInfo.privateLast
             })
             privateText.save()
+            
+            io.to(secondUserId.toString()).emit(`get-private`, {
+                privateMsg: privateMessageInfo
+            })
+
         })
     })
 }
