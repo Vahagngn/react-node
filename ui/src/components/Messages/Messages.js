@@ -24,10 +24,14 @@ export const Messages = () => {
     function getDataUsers() {
         api.get('/api/auth/users/list')
             .then(res => {
-                const participants = res.filter(u => u._id !== auth.userId)
+                const participants = res.filter(user => user._id !== auth.userId)                
                 setUsers(participants);
             })
     }
+
+    useEffect(() => {
+        socket.emit('login',{userId: users.map( (user) => user._id )});
+    }, [])
 
     function getMessages() {
         api.get('/messages/messages').then(res => {
@@ -117,6 +121,7 @@ export const Messages = () => {
                         <div className="InputContainer">
                             <div className="textMessage">
                                 <input
+                                    className="sendMessage"
                                     id="message"
                                     type="text"
                                     onKeyPress={pressHandler}
@@ -151,7 +156,7 @@ export const Messages = () => {
                                             chatActive={chatActive}
                                             user={chatActive.user}
                                             onCancel={onCancel}
-                                            // getDataUsers={getDataUsers}
+                                            setChatActive={setChatActive}
                                         /> 
                                 : null
                             }

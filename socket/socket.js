@@ -54,6 +54,22 @@ module.exports = server => {
             })
 
         })
+
+        //  -------------------------------- Private message text END  -------------------------------------------------------------
+
+    
+
+        //  -------------------------------- Online User START  -------------------------------------------------------------
+
+
+          socket.on('login', async (userId) => {
+            // users[socket.id] = data.userId;
+            console.log(userId)
+          });
+        
+          socket.on('disconnect', function(){
+            // delete users[socket.id];
+          });
     })
 }
 
