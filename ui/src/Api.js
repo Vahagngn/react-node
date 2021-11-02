@@ -7,8 +7,8 @@ const options = {
     },
     crossdomain: true
 };
-options.baseURL = 'https://testvh94.herokuapp.com/';
-// options.baseURL = 'http://localhost:5000/';
+// options.baseURL = 'https://testvh94.herokuapp.com/';
+options.baseURL = 'http://localhost:5000/';
 const instance = axios.create(options);
 instance.interceptors.response.use(response => {
     return response.data;

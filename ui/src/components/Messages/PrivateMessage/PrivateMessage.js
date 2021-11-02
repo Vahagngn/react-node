@@ -21,7 +21,6 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
 
     const sendMessage = () => {
         const privateMessages = document.getElementById('privateMessage')
-
         if (privateMessages) {
             socket.emit('private-message', {
                 message: privateMessages.value,
@@ -31,27 +30,30 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
                 secondUserId: user._id
             })
         }
+        // const sendMessage = chatActive.messages
+        // sendMessage.unshift(privateMessages.value)
+        // setMessages([...sendMessage])
+        // console.log(privateMessages.value)
+       
 
         privateMessages.value = ''
     }
 
 
     useEffect(() => {
-        socket.on('get-private', ({ privateMsg, secondUserId, firstUserId }) => {
-            const newPrivateMessage = chatActive.messages
-            newPrivateMessage.unshift(privateMsg)
-            setMessages([...newPrivateMessage])
-            // socket.emit("getMessage", {
-            //     secondUserId,
-            //     firstUserId,
-            //     privateMsg
-            // });
+        socket.on(`get-private`, ({ privateMsg }) => {
+            if(!chatActive || !chatActive.user) return
+            if(chatActive.user._id === privateMsg.firstUserId) {
+                const newPrivateMessage = chatActive.messages
+                newPrivateMessage.unshift(privateMsg)
+                setMessages([...newPrivateMessage])
+            } 
         })
 
         return () => {
             socket.off('get-private')
         }
-    }, [chatActive.messages, socket])
+    }, [chatActive, chatActive.messages, socket, user, auth])
 
     function getPrivate() {
         api.get(`/messages/private-message`).then(res => {
@@ -61,7 +63,7 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
 
     useEffect(() => {
         getPrivate()
-    }, [])
+    }, [user])
 
     return (
         user
@@ -91,7 +93,6 @@ export const PrivateMessage = ({ user, onCancel, chatActive }) => {
                     chatActive.user ?
                         <div className="messageContainer" >
                             {chatActive.messages.length ? chatActive.messages.map((data, index) => {
-                                // console.log(chatActive)
                                 return (
                                     <div key={index} style={{ display: "flex" }}>
                                         <p className="userName">{data.privateName + ' ' + data.privateLast} : &nbsp; </p>

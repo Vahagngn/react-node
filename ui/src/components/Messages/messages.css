@@ -73,8 +73,11 @@
 }
 
 .nameMessage {
+    border: solid 1px #ccc;
+    padding: 10px;
     display: flex;
-    margin: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
 }
 
 .userName {
