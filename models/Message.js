@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 const schema = new Schema({
     name: { type: String, required: true  },
     last_name: { type: String, required: true },
-    message: { type: String, required: true }
+    message: { type: String, required: true },
+    userId: { type: String, required: true }
 })
 
 

@@ -24,14 +24,13 @@ export const Messages = () => {
     function getDataUsers() {
         api.get('/api/auth/users/list')
             .then(res => {
-                const participants = res.filter(user => user._id !== auth.userId)                
+                const participants = res.filter(user => user._id !== auth.userId)  
                 setUsers(participants);
+
+                
+                // socket.emit('login',{userId: users.map( (user) => user._id )});              
             })
     }
-
-    useEffect(() => {
-        socket.emit('login',{userId: users.map( (user) => user._id )});
-    }, [])
 
     function getMessages() {
         api.get('/messages/messages').then(res => {
@@ -55,8 +54,9 @@ export const Messages = () => {
 
         socket.emit('message', {
             message: message.value,
-            name: name,
-            last_name: last_name
+            name,
+            last_name,
+            userId: auth.userId
         })
         message.value = ''
     }
@@ -141,9 +141,9 @@ export const Messages = () => {
                                     messages.length ?
                                         messages.map((messageText, index) => {
                                             return (
-                                                <div className="nameMessage" key={index}>
+                                                <div className={messageText.userId === auth.userId.toString() ? "nameMessage" : "myMessage"} key={index}>
                                                     <p className="userName">{messageText.name} {messageText.last_name} : &nbsp;</p>
-                                                    <p style={{ color: 'gray' }}>{messageText.message}</p>
+                                                    <p style={{ color: 'gray', wordBreak: 'break-all' }}>{messageText.message}</p>
                                                 </div>
                                             )
                                         }) : ''

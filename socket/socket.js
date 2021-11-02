@@ -13,15 +13,16 @@ module.exports = server => {
 
         // Global message socket start
         socket.on('message', messageInfo => {
-
+            let { name, last_name, message: messageContent, userId, date } = messageInfo 
             io.emit('get-message', {
                 msg: messageInfo
             })
             const message = new MessagesModel({
-                name: messageInfo.name,
-                last_name: messageInfo.last_name,
-                message: messageInfo.message,
-                date: messageInfo.date
+                name,
+                last_name,
+                message: messageContent,
+                userId,
+                date
             });
             message.save()
         })
@@ -61,15 +62,6 @@ module.exports = server => {
 
         //  -------------------------------- Online User START  -------------------------------------------------------------
 
-
-          socket.on('login', async (userId) => {
-            // users[socket.id] = data.userId;
-            console.log(userId)
-          });
-        
-          socket.on('disconnect', function(){
-            // delete users[socket.id];
-          });
     })
 }
 

@@ -73,11 +73,25 @@
 }
 
 .nameMessage {
+    width: 50%;
     background: rgb(224, 255, 250);
     border: solid 1px #ccc;
-    padding: 10px;
+    padding: 0 15px;
     display: flex;
+    align-items: center;
     margin-top: 20px;
+    border-radius: 20px;
+}
+
+.myMessage {
+    width: 50%;
+    background: rgb(224, 255, 250);
+    border: solid 1px #ccc;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 50%;
     border-radius: 20px;
 }
 
