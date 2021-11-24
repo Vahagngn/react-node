@@ -24,11 +24,9 @@ export const Messages = () => {
     function getOnlineUsers() {
         api.get('/api/auth/online-users')
         .then(res => {
-            console.log(res)
             const participants = res.filter(user => user._id !== auth.userId)
             setUsers(participants)
-        })
-        
+        })  
     }
     // function getDataUsers() {
     //     api.get('/api/auth/users/list')
